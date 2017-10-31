@@ -52,14 +52,20 @@ public class AsyncSoapValueRequestTask extends AsyncTask<Void, Void, Void> {
     private static final String XPATH_LEVEL1 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand1_Ist']/Value";
     private static final String XPATH_LEVEL2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand2_Ist']/Value";
     private static final String XPATH_LEVEL3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand3_Ist']/Value";
+    private static final String XPATH_LL1 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL1']/Value";
+    private static final String XPATH_LL2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL2']/Value";
+    private static final String XPATH_LL3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL3']/Value";
+    private static final String XPATH_LH1 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH1']/Value";
+    private static final String XPATH_LH2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH2']/Value";
+    private static final String XPATH_LH3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH3']/Value";
 
-    private MainActivity activity;
+    private OnValuesAvailable listener;
 
     private float level1, level2, level3;
+    private boolean ll1, ll2, ll3, lh1, lh2, lh3;
 
-    public AsyncSoapValueRequestTask(Context context) {
-        super();
-        this.activity = (MainActivity) context;
+    AsyncSoapValueRequestTask(Context context) {
+        listener = (OnValuesAvailable) context;
     }
 
     @Override
@@ -75,7 +81,8 @@ public class AsyncSoapValueRequestTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        activity.setTankLevels(level1, level2, level3);
+        listener.setTankLevels(level1, level2, level3);
+        listener.setCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
     }
 
     private String sendSoapReadRequest(String soapMessage) {
@@ -107,7 +114,7 @@ public class AsyncSoapValueRequestTask extends AsyncTask<Void, Void, Void> {
             }
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((line = bufferedReader.readLine()) != null) {
                 response.append(line);
                 response.append('\n');
@@ -136,15 +143,32 @@ public class AsyncSoapValueRequestTask extends AsyncTask<Void, Void, Void> {
 
             XPathExpression expr = xpath.compile(XPATH_LEVEL1);
             level1 = (float) ((double) expr.evaluate(doc, XPathConstants.NUMBER));
-
             expr = xpath.compile(XPATH_LEVEL2);
             level2 = (float) ((double) expr.evaluate(doc, XPathConstants.NUMBER));
-
             expr = xpath.compile(XPATH_LEVEL3);
             level3 = (float) ((double) expr.evaluate(doc, XPathConstants.NUMBER));
+
+            expr = xpath.compile(XPATH_LL1);
+            ll1 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
+            expr = xpath.compile(XPATH_LL2);
+            ll2 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
+            expr = xpath.compile(XPATH_LL3);
+            ll3 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
+            expr = xpath.compile(XPATH_LH1);
+            lh1 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
+            expr = xpath.compile(XPATH_LH2);
+            lh2 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
+            expr = xpath.compile(XPATH_LH3);
+            lh3 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
         }
         catch (Exception e) {
             Log.e("XML_PARSE", e.toString());
         }
+    }
+
+    public interface OnValuesAvailable {
+        void setTankLevels(float level1, float level2, float level3);
+
+        void setCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3);
     }
 }

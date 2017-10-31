@@ -12,7 +12,7 @@ import android.support.wearable.view.GridViewPager;
 import android.util.Log;
 
 
-public class MainActivity extends WearableActivity {
+public class MainActivity extends WearableActivity implements AsyncSoapValueRequestTask.OnValuesAvailable {
 
     private static final int NUM_COLUMNS = 3;
     private static final int PERIOD = 500;
@@ -74,12 +74,18 @@ public class MainActivity extends WearableActivity {
         super.onPause();
     }
 
+    @Override
     public void setTankLevels(float level1, float level2, float level3) {
         float tankHeight = (float) getResources().getDimension(R.dimen.tank_height);
         level1 = level1 / MAX_LEVEL * tankHeight;
         level2 = level2 / MAX_LEVEL * tankHeight;
         level3 = level3 / MAX_LEVEL * tankHeight;
         tankPageFragment.setTankLevels(level1, level2, level3);
+    }
+
+    @Override
+    public void setCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3) {
+        tankPageFragment.setCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {
