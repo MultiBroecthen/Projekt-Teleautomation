@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AT Kleinversuchsanlage</string>
+    <string name="tank_level">Füllstand</string>
+    <string name="pump_status">Pumpenstatus</string>
+    <string name="history">Verlauf</string>
+    <string name="tank1">Tank 1</string>
+    <string name="tank2">Tank 2</string>
+    <string name="tank3">Tank 3</string>
+</resources>
