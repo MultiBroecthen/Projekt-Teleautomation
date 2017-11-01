@@ -1,18 +1,10 @@
 package de.ok94.atkleinversuchsanlage;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.w3c.dom.Document;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,11 +14,9 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
-public class AsyncSoapValueRequestTask extends AsyncTask<Void, Void, Void> {
+public class SoapReadTask extends SoapTask {
 
-    private static final String SOAP_ACTION = "\"http://opcfoundation.org/webservices/XMLDA/1.0/Read\"";
-    private static final String SOAP_URL = "http://141.30.154.211:8087/OPC/DA";
-    private static final String SOAP_MESSAGE = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+    private static final String SOAP_REQUEST = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
             "<SOAP-ENV:Envelope\n" +
             "    xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "    xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"\n" +
@@ -59,81 +49,27 @@ public class AsyncSoapValueRequestTask extends AsyncTask<Void, Void, Void> {
     private static final String XPATH_LH2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH2']/Value";
     private static final String XPATH_LH3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH3']/Value";
 
-    private OnValuesAvailable listener;
+    private ValuesAvailable listener;
 
     private float level1, level2, level3;
     private boolean ll1, ll2, ll3, lh1, lh2, lh3;
 
-    AsyncSoapValueRequestTask(Context context) {
-        listener = (OnValuesAvailable) context;
-    }
-
-    @Override
-    protected Void doInBackground(Void... params) {
-        String soapResponse = sendSoapReadRequest(SOAP_MESSAGE);
-        Log.d("SOAP_RESPONSE", soapResponse);
-
-        readSoapReadResponse(soapResponse);
-
-        return null;
+    SoapReadTask(ValuesAvailable listener) {
+        super(SOAP_REQUEST);
+        this.listener = listener;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        listener.setTankLevels(level1, level2, level3);
-        listener.setCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
+        listener.updateTankLevels(level1, level2, level3);
+        listener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
     }
 
-    private String sendSoapReadRequest(String soapMessage) {
-        URL url;
-        HttpURLConnection connection = null;
-        String soapResponse = "";
-        try {
-            url = new URL(SOAP_URL);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("SOAPAction", SOAP_ACTION);
-            connection.setUseCaches(false);
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(10000);
+    @Override
+    protected void readSoapResponse(String soapResponse) {
+        Log.d("SOAP_READ_RESPONSE", soapResponse);
 
-            DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-            dataOutputStream.writeBytes(soapMessage);
-            dataOutputStream.flush();
-            dataOutputStream.close();
-
-            InputStream inputStream;
-            if (connection.getResponseCode() <= 400) {
-                inputStream = connection.getInputStream();
-            }
-            else {
-                inputStream = connection.getErrorStream();
-            }
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            StringBuilder response = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null) {
-                response.append(line);
-                response.append('\n');
-            }
-            bufferedReader.close();
-            soapResponse = response.toString();
-        }
-        catch (Exception e) {
-            Log.e("CONNECTION", e.toString());
-        }
-        finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-        return soapResponse;
-    }
-
-    private void readSoapReadResponse(String soapResponse) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -166,9 +102,9 @@ public class AsyncSoapValueRequestTask extends AsyncTask<Void, Void, Void> {
         }
     }
 
-    public interface OnValuesAvailable {
-        void setTankLevels(float level1, float level2, float level3);
+    public interface ValuesAvailable {
+        void updateTankLevels(float level1, float level2, float level3);
 
-        void setCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3);
+        void updateCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3);
     }
 }

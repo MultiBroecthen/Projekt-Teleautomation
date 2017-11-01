@@ -12,18 +12,15 @@ import android.support.wearable.view.GridViewPager;
 import android.util.Log;
 
 
-public class MainActivity extends WearableActivity implements AsyncSoapValueRequestTask.OnValuesAvailable {
+public class MainActivity extends WearableActivity implements SoapReadTask.ValuesAvailable {
 
-    private static final int NUM_COLUMNS = 3;
-    private static final int PERIOD = 500;
+    private static final int NUM_PAGES = 3;
+    private static final int SOAP_READ_PERIOD = 500;
     private static final float MAX_LEVEL = 280.0f;
 
-    private GridViewPager mPager;
-    private DotsPageIndicator mPageIndicator;
-    private ScreenSlidePagerAdapter mPagerAdapter;
     private TankPageFragment tankPageFragment;
 
-    private AsyncSoapValueRequestTask soapValueRequestTask;
+    private SoapReadTask soapReadTask;
     private Handler handler;
     private Runnable runnable;
     private Context context;
@@ -36,10 +33,10 @@ public class MainActivity extends WearableActivity implements AsyncSoapValueRequ
         // Enables Always-on
         setAmbientEnabled();
 
-        mPager = (GridViewPager) findViewById(R.id.pager);
-        mPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
+        GridViewPager mPager = (GridViewPager) findViewById(R.id.pager);
+        DotsPageIndicator mPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
         mPageIndicator.setPager(mPager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
+        ScreenSlidePagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
         handler = new Handler();
@@ -54,18 +51,18 @@ public class MainActivity extends WearableActivity implements AsyncSoapValueRequ
             @Override
             public void run() {
                 try {
-                    soapValueRequestTask = new AsyncSoapValueRequestTask(context);
-                    soapValueRequestTask.execute();
+                    soapReadTask = new SoapReadTask((SoapReadTask.ValuesAvailable) context);
+                    soapReadTask.execute();
                 }
                 catch (Exception e) {
                     Log.e("ASYNC_TASK", e.toString());
                 }
                 finally {
-                    handler.postDelayed(this, PERIOD);
+                    handler.postDelayed(this, SOAP_READ_PERIOD);
                 }
             }
         };
-        handler.postDelayed(runnable, PERIOD);
+        handler.postDelayed(runnable, SOAP_READ_PERIOD);
     }
 
     @Override
@@ -75,8 +72,8 @@ public class MainActivity extends WearableActivity implements AsyncSoapValueRequ
     }
 
     @Override
-    public void setTankLevels(float level1, float level2, float level3) {
-        float tankHeight = (float) getResources().getDimension(R.dimen.tank_height);
+    public void updateTankLevels(float level1, float level2, float level3) {
+        float tankHeight = getResources().getDimension(R.dimen.tank_height);
         level1 = level1 / MAX_LEVEL * tankHeight;
         level2 = level2 / MAX_LEVEL * tankHeight;
         level3 = level3 / MAX_LEVEL * tankHeight;
@@ -84,7 +81,7 @@ public class MainActivity extends WearableActivity implements AsyncSoapValueRequ
     }
 
     @Override
-    public void setCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3) {
+    public void updateCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3) {
         tankPageFragment.setCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
     }
 
@@ -116,7 +113,7 @@ public class MainActivity extends WearableActivity implements AsyncSoapValueRequ
 
         @Override
         public int getColumnCount(int row) {
-            return NUM_COLUMNS;
+            return NUM_PAGES;
         }
     }
 }
