@@ -16,23 +16,32 @@ public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
     private static final String SOAP_URL = "http://141.30.154.211:8087/OPC/DA";
     private final String SOAP_REQUEST;
 
+    private boolean isSoapResponse;
+
     SoapTask(String soapRequest) {
         SOAP_REQUEST = soapRequest;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        String soapResponse = sendSoapRequest(SOAP_REQUEST);
+        String response = sendSoapRequest();
 
-        readSoapResponse(soapResponse);
+        if (isSoapResponse) {
+            readSoapResponse(response);
+        }
+        else {
+            readErrorResponse(response);
+        }
 
         return null;
     }
 
-    private String sendSoapRequest(String soapRequest) {
+    private String sendSoapRequest() {
         URL url;
         HttpURLConnection connection = null;
-        String soapResponse = "";
+        String response = "";
+        isSoapResponse = false;
+
         try {
             url = new URL(SOAP_URL);
             connection = (HttpURLConnection) url.openConnection();
@@ -45,26 +54,27 @@ public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
             connection.setReadTimeout(10000);
 
             DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
-            dataOutputStream.writeBytes(soapRequest);
+            dataOutputStream.writeBytes(SOAP_REQUEST);
             dataOutputStream.flush();
             dataOutputStream.close();
 
             InputStream inputStream;
             if (connection.getResponseCode() <= 400) {
                 inputStream = connection.getInputStream();
+                isSoapResponse = true;
             }
             else {
                 inputStream = connection.getErrorStream();
             }
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             StringBuilder responseBuilder = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 responseBuilder.append(line);
                 responseBuilder.append('\n');
             }
-            bufferedReader.close();
-            soapResponse = responseBuilder.toString();
+            reader.close();
+            response = responseBuilder.toString();
         }
         catch (Exception e) {
             Log.e("CONNECTION", e.toString());
@@ -74,7 +84,12 @@ public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
                 connection.disconnect();
             }
         }
-        return soapResponse;
+
+        return response;
+    }
+
+    private void readErrorResponse(String errorResponse) {
+        Log.i("ERROR_RESPONSE", errorResponse);
     }
 
     protected abstract void readSoapResponse(String soapResponse);

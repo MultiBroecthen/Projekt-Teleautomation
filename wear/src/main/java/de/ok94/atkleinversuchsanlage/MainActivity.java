@@ -33,11 +33,11 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         // Enables Always-on
         setAmbientEnabled();
 
-        GridViewPager mPager = (GridViewPager) findViewById(R.id.pager);
-        DotsPageIndicator mPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
-        mPageIndicator.setPager(mPager);
-        ScreenSlidePagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
+        DotsPageIndicator pageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
+        pageIndicator.setPager(pager);
+        ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
+        pager.setAdapter(pagerAdapter);
 
         handler = new Handler();
         context = this;
