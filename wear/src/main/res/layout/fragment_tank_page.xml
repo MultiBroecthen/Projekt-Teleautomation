@@ -6,13 +6,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tank_level"
+            android:text="@string/tank_page_title"
             android:textAlignment="center"
             android:textSize="@dimen/title"
             android:textColor="@color/accent"/>
@@ -51,7 +50,7 @@
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="1"
+                    android:text="@string/tank1"
                     android:textAlignment="gravity"
                     android:layout_below="@id/tank1"
                     android:textSize="@dimen/text"
@@ -98,7 +97,7 @@
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2"
+                    android:text="@string/tank2"
                     android:textAlignment="gravity"
                     android:layout_below="@id/tank2"
                     android:textSize="@dimen/text"
@@ -145,7 +144,7 @@
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="3"
+                    android:text="@string/tank3"
                     android:textAlignment="gravity"
                     android:layout_below="@id/tank3"
                     android:textSize="@dimen/text"

@@ -77,12 +77,16 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         level1 = level1 / MAX_LEVEL * tankHeight;
         level2 = level2 / MAX_LEVEL * tankHeight;
         level3 = level3 / MAX_LEVEL * tankHeight;
-        tankPageFragment.setTankLevels(level1, level2, level3);
+        if (tankPageFragment.isAdded()) {
+            tankPageFragment.setTankLevels(level1, level2, level3);
+        }
     }
 
     @Override
     public void updateCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3) {
-        tankPageFragment.setCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
+        if (tankPageFragment.isAdded()) {
+            tankPageFragment.setCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
+        }
     }
 
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {

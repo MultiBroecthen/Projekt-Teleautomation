@@ -7,6 +7,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/history"
+        android:text="@string/history_page_title"
         android:textColor="@color/accent"/>
 </ScrollView>

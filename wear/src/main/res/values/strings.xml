@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">AT Kleinversuchsanlage</string>
-    <string name="tank_level">Füllstand</string>
-    <string name="pump_status">Pumpenstatus</string>
-    <string name="history">Verlauf</string>
-    <string name="tank1">Tank 1</string>
-    <string name="tank2">Tank 2</string>
-    <string name="tank3">Tank 3</string>
+    <string name="tank_page_title"><u>Füllstand</u></string>
+    <string name="pump_page_title"><u>Pumpenstatus</u></string>
+    <string name="history_page_title"><u>Verlauf</u></string>
+    <string name="tank1">1</string>
+    <string name="tank2">2</string>
+    <string name="tank3">3</string>
+    <string name="pumping_active"><b>Umpumpen von Behälter\u00A0%1$d nach Behälter\u00A0%2$d aktiv</b></string>
+    <string name="pumping_inactive">Umpumpen inaktiv</string>
+    <string name="start"><i>Starten</i></string>
+    <string name="stop"><i>Stoppen</i></string>
 </resources>
