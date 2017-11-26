@@ -35,6 +35,9 @@ public class SoapReadTask extends SoapTask {
             "                <m:Items ItemName=\"Schneider/LL1\"/>\n" +
             "                <m:Items ItemName=\"Schneider/LL2\"/>\n" +
             "                <m:Items ItemName=\"Schneider/LL3\"/>\n" +
+            "                <m:Items ItemName=\"Schneider/Start_Umpumpen_FL\"/>\n" +
+            "                <m:Items ItemName=\"Schneider/Behaelter_A_FL\"/>\n" +
+            "                <m:Items ItemName=\"Schneider/Behaelter_B_FL\"/>\n" +
             "            </m:ItemList>\n" +
             "        </m:Read>\n" +
             "    </SOAP-ENV:Body>\n" +
@@ -48,11 +51,16 @@ public class SoapReadTask extends SoapTask {
     private static final String XPATH_LH1 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH1']/Value";
     private static final String XPATH_LH2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH2']/Value";
     private static final String XPATH_LH3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH3']/Value";
+    private static final String XPATH_PUMPING = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Start_Umpumpen_FL']/Value";
+    private static final String XPATH_TANK_A = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_A_FL']/Value";
+    private static final String XPATH_TANK_B = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_B_FL']/Value";
 
     private ValuesAvailable listener;
 
     private float level1, level2, level3;
     private boolean ll1, ll2, ll3, lh1, lh2, lh3;
+    private boolean pumping;
+    private int tankA, tankB;
 
     SoapReadTask(ValuesAvailable listener) {
         super(SOAP_REQUEST);
@@ -65,6 +73,7 @@ public class SoapReadTask extends SoapTask {
         // update activity
         listener.updateTankLevels(level1, level2, level3);
         listener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
+        listener.updatePumpingState(pumping, tankA, tankB);
     }
 
     @Override
@@ -100,6 +109,14 @@ public class SoapReadTask extends SoapTask {
             lh2 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
             expr = xpath.compile(XPATH_LH3);
             lh3 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
+
+            // get pumping state
+            expr = xpath.compile(XPATH_PUMPING);
+            pumping = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
+            expr = xpath.compile(XPATH_TANK_A);
+            tankA = (int) ((double) expr.evaluate(doc, XPathConstants.NUMBER));
+            expr = xpath.compile(XPATH_TANK_B);
+            tankB = (int) ((double) expr.evaluate(doc, XPathConstants.NUMBER));
         }
         catch (Exception e) {
             Log.e("XML_PARSE", e.toString());
@@ -110,5 +127,7 @@ public class SoapReadTask extends SoapTask {
         void updateTankLevels(float level1, float level2, float level3);
 
         void updateCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3);
+
+        void updatePumpingState(boolean pumping, int tankA, int tankB);
     }
 }

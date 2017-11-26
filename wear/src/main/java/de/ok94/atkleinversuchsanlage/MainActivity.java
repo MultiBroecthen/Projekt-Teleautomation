@@ -19,6 +19,7 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
     private static final float MAX_LEVEL = 280.0f;
 
     private TankPageFragment tankPageFragment;
+    private PumpPageFragment pumpPageFragment;
 
     private SoapReadTask soapReadTask;
     private Handler handler;
@@ -94,6 +95,13 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         }
     }
 
+    @Override
+    public void updatePumpingState(boolean pumping, int tankA, int tankB) {
+        if (pumpPageFragment.isAdded()) {
+            pumpPageFragment.setPumpingState(pumping, tankA, tankB);
+        }
+    }
+
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {
 
         ScreenSlidePagerAdapter(FragmentManager fm) {
@@ -107,7 +115,8 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
                     tankPageFragment = new TankPageFragment();
                     return tankPageFragment;
                 case 1:
-                    return new PumpPageFragment();
+                    pumpPageFragment = new PumpPageFragment();
+                    return pumpPageFragment;
             }
 
             return null;

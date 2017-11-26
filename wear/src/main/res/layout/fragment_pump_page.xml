@@ -23,7 +23,7 @@
             android:layout_height="@dimen/text"/>
 
         <TextView
-            android:id="@+id/textPumpingStatus"
+            android:id="@+id/textPumpingState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pumping_inactive"
