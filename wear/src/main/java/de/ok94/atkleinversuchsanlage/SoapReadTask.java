@@ -16,6 +16,7 @@ import javax.xml.xpath.XPathFactory;
 
 public class SoapReadTask extends SoapTask {
 
+    private static final String SOAP_ACTION = "\"http://opcfoundation.org/webservices/XMLDA/1.0/Read\"";
     private static final String SOAP_REQUEST = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
             "<SOAP-ENV:Envelope\n" +
             "    xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
@@ -63,7 +64,7 @@ public class SoapReadTask extends SoapTask {
     private int tankA, tankB;
 
     SoapReadTask(ValuesAvailable listener) {
-        super(SOAP_REQUEST);
+        super(SOAP_ACTION, SOAP_REQUEST);
         this.listener = listener;
     }
 

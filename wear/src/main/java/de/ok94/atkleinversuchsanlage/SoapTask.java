@@ -12,13 +12,14 @@ import java.net.URL;
 
 public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
 
-    private static final String SOAP_ACTION = "\"http://opcfoundation.org/webservices/XMLDA/1.0/Read\"";
     private static final String SOAP_URL = "http://141.30.154.211:8087/OPC/DA";
+    private final String SOAP_ACTION;
     private final String SOAP_REQUEST;
 
     private boolean isSoapResponse;
 
-    SoapTask(String soapRequest) {
+    SoapTask(String soapAction, String soapRequest) {
+        SOAP_ACTION = soapAction;
         SOAP_REQUEST = soapRequest;
     }
 
@@ -36,7 +37,7 @@ public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    private String sendSoapRequest() {
+    protected String sendSoapRequest() {
         URL url;
         HttpURLConnection connection = null;
         String response = "";

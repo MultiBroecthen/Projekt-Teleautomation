@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_background"
+    android:padding="@dimen/box_inset_layout_padding"
+    tools:context="de.ok94.atkleinversuchsanlage.ChooseSourceActivity"
+    tools:deviceIds="wear">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="@string/choose_source_title"
+            android:textAlignment="center"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/buttonSrc1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="@dimen/button_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:text="@string/one"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/title" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="@dimen/text"
+                android:layout_height="@dimen/text" />
+
+            <FrameLayout
+                android:id="@+id/buttonSrc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="@dimen/button_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:text="@string/two"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/title" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="@dimen/text"
+                android:layout_height="@dimen/text" />
+
+            <FrameLayout
+                android:id="@+id/buttonSrc3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="@dimen/button_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:text="@string/three"
+                    android:textColor="@color/light_grey"
+                    android:textSize="@dimen/title" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text" />
+
+        <LinearLayout
+            android:id="@+id/buttonSrcCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/button_padding"
+            android:paddingTop="@dimen/button_padding">
+
+            <ImageView
+                android:layout_width="@dimen/inline_action_button"
+                android:layout_height="@dimen/inline_action_button"
+                android:background="@drawable/circle"
+                android:src="@drawable/ic_cancel" />
+
+            <TextView
+                android:layout_width="@dimen/text"
+                android:layout_height="@dimen/text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textColor="@color/accent"
+                android:textSize="@dimen/text" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.wear.widget.BoxInsetLayout>
+

@@ -15,7 +15,7 @@ import android.util.Log;
 public class MainActivity extends WearableActivity implements SoapReadTask.ValuesAvailable {
 
     private static final int NUM_PAGES = 2;
-    private static final int SOAP_READ_PERIOD = 500;
+    private static final int SOAP_READ_PERIOD = 1000;
     private static final float MAX_LEVEL = 280.0f;
 
     private TankPageFragment tankPageFragment;

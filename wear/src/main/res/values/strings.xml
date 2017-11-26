@@ -9,4 +9,12 @@
     <string name="pumping_inactive">Umpumpen inaktiv</string>
     <string name="start"><i>Starten</i></string>
     <string name="stop"><i>Stoppen</i></string>
+    <string name="title_activity_choose_source">ChooseSourceActivity</string>
+    <string name="choose_source_title"><u>Quellbehälter wählen</u></string>
+    <string name="one"><b>1</b></string>
+    <string name="two"><b>2</b></string>
+    <string name="three"><b>3</b></string>
+    <string name="cancel"><i>Abbrechen</i></string>
+    <string name="title_activity_choose_target">ChooseTargetActivity</string>
+    <string name="choose_target_title"><u>Zielbehälter wählen</u></string>
 </resources>
