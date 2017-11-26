@@ -42,6 +42,7 @@ public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
         String response = "";
         isSoapResponse = false;
 
+        // send the SOAP request via HTTP
         try {
             url = new URL(SOAP_URL);
             connection = (HttpURLConnection) url.openConnection();

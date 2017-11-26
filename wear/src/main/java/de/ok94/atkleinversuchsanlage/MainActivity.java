@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class MainActivity extends WearableActivity implements SoapReadTask.ValuesAvailable {
 
-    private static final int NUM_PAGES = 3;
+    private static final int NUM_PAGES = 2;
     private static final int SOAP_READ_PERIOD = 500;
     private static final float MAX_LEVEL = 280.0f;
 
@@ -33,6 +33,7 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         // Enables Always-on
         setAmbientEnabled();
 
+        // set up the pages of the main activity
         GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
         DotsPageIndicator pageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
         pageIndicator.setPager(pager);
@@ -47,6 +48,7 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
     protected void onResume() {
         super.onResume();
 
+        // start a Runnable that executes the SoapReadTask periodically
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -67,16 +69,19 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
 
     @Override
     protected void onPause() {
+        // stop the Runnable
         handler.removeCallbacks(runnable);
         super.onPause();
     }
 
     @Override
     public void updateTankLevels(float level1, float level2, float level3) {
+        // scale the tank levels with the height of the tanks in the activity
         float tankHeight = getResources().getDimension(R.dimen.tank_height);
         level1 = level1 / MAX_LEVEL * tankHeight;
         level2 = level2 / MAX_LEVEL * tankHeight;
         level3 = level3 / MAX_LEVEL * tankHeight;
+
         if (tankPageFragment.isAdded()) {
             tankPageFragment.setTankLevels(level1, level2, level3);
         }
@@ -103,8 +108,6 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
                     return tankPageFragment;
                 case 1:
                     return new PumpPageFragment();
-                case 2:
-                    return new HistoryPageFragment();
             }
 
             return null;

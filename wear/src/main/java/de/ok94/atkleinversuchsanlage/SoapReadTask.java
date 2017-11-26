@@ -62,6 +62,7 @@ public class SoapReadTask extends SoapTask {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        // update activity
         listener.updateTankLevels(level1, level2, level3);
         listener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
     }
@@ -70,6 +71,7 @@ public class SoapReadTask extends SoapTask {
     protected void readSoapResponse(String soapResponse) {
         Log.d("SOAP_READ_RESPONSE", soapResponse);
 
+        // read the SOAP response via Xpath
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -77,6 +79,7 @@ public class SoapReadTask extends SoapTask {
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
 
+            // get the tank levels
             XPathExpression expr = xpath.compile(XPATH_LEVEL1);
             level1 = (float) ((double) expr.evaluate(doc, XPathConstants.NUMBER));
             expr = xpath.compile(XPATH_LEVEL2);
@@ -84,6 +87,7 @@ public class SoapReadTask extends SoapTask {
             expr = xpath.compile(XPATH_LEVEL3);
             level3 = (float) ((double) expr.evaluate(doc, XPathConstants.NUMBER));
 
+            // get the capacitive sensor states
             expr = xpath.compile(XPATH_LL1);
             ll1 = Boolean.parseBoolean((String) expr.evaluate(doc, XPathConstants.STRING));
             expr = xpath.compile(XPATH_LL2);
