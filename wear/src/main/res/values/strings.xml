@@ -5,7 +5,7 @@
     <string name="tank1">1</string>
     <string name="tank2">2</string>
     <string name="tank3">3</string>
-    <string name="pumping_active"><b>Umpumpen von Behälter\u00A0%1$d nach Behälter\u00A0%2$d aktiv</b></string>
+    <string name="pumping_active">Umpumpen von Behälter\u00A0<b>%1$d</b> nach Behälter\u00A0<b>%2$d</b> aktiv</string>
     <string name="pumping_inactive">Umpumpen inaktiv</string>
     <string name="start"><i>Starten</i></string>
     <string name="stop"><i>Stoppen</i></string>
@@ -17,4 +17,5 @@
     <string name="cancel"><i>Abbrechen</i></string>
     <string name="title_activity_choose_target">ChooseTargetActivity</string>
     <string name="choose_target_title"><u>Zielbehälter wählen</u></string>
+    <string name="no_connection">keine Verbindung zum Server</string>
 </resources>

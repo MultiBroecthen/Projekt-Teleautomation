@@ -20,5 +20,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom" />
+
+    <LinearLayout
+        android:id="@+id/noConnectionOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/dark_background"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_cloud_off"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/text"
+            android:text="@string/no_connection"
+            android:textAlignment="center"/>
+    </LinearLayout>
 </android.support.wear.widget.BoxInsetLayout>
 

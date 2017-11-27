@@ -90,7 +90,7 @@ public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
         return response;
     }
 
-    private void readErrorResponse(String errorResponse) {
+    protected void readErrorResponse(String errorResponse) {
         Log.i("ERROR_RESPONSE", errorResponse);
     }
 

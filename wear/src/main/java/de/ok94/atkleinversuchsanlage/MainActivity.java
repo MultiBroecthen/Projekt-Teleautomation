@@ -10,6 +10,7 @@ import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.support.wearable.view.GridViewPager;
 import android.util.Log;
+import android.widget.LinearLayout;
 
 
 public class MainActivity extends WearableActivity implements SoapReadTask.ValuesAvailable {
@@ -20,6 +21,8 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
 
     private TankPageFragment tankPageFragment;
     private PumpPageFragment pumpPageFragment;
+
+    private LinearLayout noConnectionOverlay;
 
     private SoapReadTask soapReadTask;
     private Handler handler;
@@ -41,13 +44,15 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         pager.setAdapter(pagerAdapter);
 
-        handler = new Handler();
-        context = this;
+        noConnectionOverlay = (LinearLayout) findViewById(R.id.noConnectionOverlay);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        handler = new Handler();
+        context = this;
 
         // start a Runnable that executes the SoapReadTask periodically
         runnable = new Runnable() {
@@ -100,6 +105,11 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         if (pumpPageFragment.isAdded()) {
             pumpPageFragment.setPumpingState(pumping, tankA, tankB);
         }
+    }
+
+    @Override
+    public void setNoConnectionOverlayVisibility(int visibility) {
+        noConnectionOverlay.setVisibility(visibility);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {

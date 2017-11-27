@@ -1,6 +1,7 @@
 package de.ok94.atkleinversuchsanlage;
 
 import android.util.Log;
+import android.view.View;
 
 import org.w3c.dom.Document;
 
@@ -62,6 +63,7 @@ public class SoapReadTask extends SoapTask {
     private boolean ll1, ll2, ll3, lh1, lh2, lh3;
     private boolean pumping;
     private int tankA, tankB;
+    private boolean lostConnection;
 
     SoapReadTask(ValuesAvailable listener) {
         super(SOAP_ACTION, SOAP_REQUEST);
@@ -75,11 +77,18 @@ public class SoapReadTask extends SoapTask {
         listener.updateTankLevels(level1, level2, level3);
         listener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
         listener.updatePumpingState(pumping, tankA, tankB);
+        if (lostConnection) {
+            listener.setNoConnectionOverlayVisibility(View.VISIBLE);
+        }
+        else {
+            listener.setNoConnectionOverlayVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void readSoapResponse(String soapResponse) {
         Log.d("SOAP_READ_RESPONSE", soapResponse);
+        lostConnection = false;
 
         // read the SOAP response via Xpath
         try {
@@ -124,11 +133,19 @@ public class SoapReadTask extends SoapTask {
         }
     }
 
+    @Override
+    protected void readErrorResponse(String errorResponse) {
+        super.readErrorResponse(errorResponse);
+        lostConnection = true;
+    }
+
     public interface ValuesAvailable {
         void updateTankLevels(float level1, float level2, float level3);
 
         void updateCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3);
 
         void updatePumpingState(boolean pumping, int tankA, int tankB);
+
+        void setNoConnectionOverlayVisibility(int visibility);
     }
 }
