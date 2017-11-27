@@ -18,4 +18,5 @@
     <string name="title_activity_choose_target">ChooseTargetActivity</string>
     <string name="choose_target_title"><u>Zielbehälter wählen</u></string>
     <string name="no_connection">keine Verbindung zum Server</string>
+    <string name="warning">Warnung</string>
 </resources>

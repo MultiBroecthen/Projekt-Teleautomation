@@ -16,10 +16,6 @@
             android:textSize="@dimen/title"
             android:textColor="@color/accent"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/text" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,10 +29,16 @@
                 android:paddingRight="@dimen/half_tank_interspace">
 
                 <TextView
+                    android:id="@+id/spacer1"
+                    android:layout_width="@dimen/tank_width"
+                    android:layout_height="@dimen/text"/>
+
+                <TextView
                     android:id="@+id/tank1"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="@dimen/tank_height"
-                    android:background="@color/darker_ui_element"/>
+                    android:background="@color/darker_ui_element"
+                    android:layout_below="@id/spacer1"/>
 
                 <TextView
                     android:id="@+id/level1"
@@ -56,21 +58,13 @@
                     android:textSize="@dimen/text"
                     android:textColor="@color/accent"/>
 
-                <TextView
-                    android:id="@+id/lh1"
-                    android:layout_width="@dimen/capacitive_sensor_size"
-                    android:layout_height="@dimen/capacitive_sensor_size"
-                    android:layout_margin="@dimen/capacitive_sensor_margin"
-                    android:layout_alignTop="@id/tank1"
-                    android:background="@color/dark_grey"/>
-
-                <TextView
-                    android:id="@+id/ll1"
-                    android:layout_width="@dimen/capacitive_sensor_size"
-                    android:layout_height="@dimen/capacitive_sensor_size"
-                    android:layout_margin="@dimen/capacitive_sensor_margin"
-                    android:layout_alignBottom="@id/tank1"
-                    android:background="@color/light_grey"/>
+                <ImageView
+                    android:id="@+id/warning1"
+                    android:layout_width="@dimen/tank_width"
+                    android:layout_height="@dimen/tank_width"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_action_warning"
+                    android:contentDescription="@string/warning"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -80,10 +74,16 @@
                 android:paddingRight="@dimen/half_tank_interspace">
 
                 <TextView
+                    android:id="@+id/spacer2"
+                    android:layout_width="@dimen/tank_width"
+                    android:layout_height="@dimen/text"/>
+
+                <TextView
                     android:id="@+id/tank2"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="@dimen/tank_height"
-                    android:background="@color/darker_ui_element"/>
+                    android:background="@color/darker_ui_element"
+                    android:layout_below="@id/spacer2"/>
 
                 <TextView
                     android:id="@+id/level2"
@@ -103,21 +103,13 @@
                     android:textSize="@dimen/text"
                     android:textColor="@color/accent"/>
 
-                <TextView
-                    android:id="@+id/lh2"
-                    android:layout_width="@dimen/capacitive_sensor_size"
-                    android:layout_height="@dimen/capacitive_sensor_size"
-                    android:layout_margin="@dimen/capacitive_sensor_margin"
-                    android:layout_alignTop="@id/tank2"
-                    android:background="@color/dark_grey"/>
-
-                <TextView
-                    android:id="@+id/ll2"
-                    android:layout_width="@dimen/capacitive_sensor_size"
-                    android:layout_height="@dimen/capacitive_sensor_size"
-                    android:layout_margin="@dimen/capacitive_sensor_margin"
-                    android:layout_alignBottom="@id/tank2"
-                    android:background="@color/light_grey"/>
+                <ImageView
+                    android:id="@+id/warning2"
+                    android:layout_width="@dimen/tank_width"
+                    android:layout_height="@dimen/tank_width"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_action_warning"
+                    android:contentDescription="@string/warning"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -127,10 +119,16 @@
                 android:paddingRight="@dimen/half_tank_interspace">
 
                 <TextView
+                    android:id="@+id/spacer3"
+                    android:layout_width="@dimen/tank_width"
+                    android:layout_height="@dimen/text"/>
+
+                <TextView
                     android:id="@+id/tank3"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="@dimen/tank_height"
-                    android:background="@color/darker_ui_element"/>
+                    android:background="@color/darker_ui_element"
+                    android:layout_below="@id/spacer3"/>
 
                 <TextView
                     android:id="@+id/level3"
@@ -150,21 +148,13 @@
                     android:textSize="@dimen/text"
                     android:textColor="@color/accent"/>
 
-                <TextView
-                    android:id="@+id/lh3"
-                    android:layout_width="@dimen/capacitive_sensor_size"
-                    android:layout_height="@dimen/capacitive_sensor_size"
-                    android:layout_margin="@dimen/capacitive_sensor_margin"
-                    android:layout_alignTop="@id/tank3"
-                    android:background="@color/dark_grey"/>
-
-                <TextView
-                    android:id="@+id/ll3"
-                    android:layout_width="@dimen/capacitive_sensor_size"
-                    android:layout_height="@dimen/capacitive_sensor_size"
-                    android:layout_margin="@dimen/capacitive_sensor_margin"
-                    android:layout_alignBottom="@id/tank3"
-                    android:background="@color/light_grey"/>
+                <ImageView
+                    android:id="@+id/warning3"
+                    android:layout_width="@dimen/tank_width"
+                    android:layout_height="@dimen/tank_width"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_action_warning"
+                    android:contentDescription="@string/warning"/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

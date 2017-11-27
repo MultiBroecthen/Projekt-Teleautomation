@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -38,7 +39,7 @@
             android:label="@string/title_activity_choose_source" />
         <activity
             android:name=".ChooseTargetActivity"
-            android:label="@string/title_activity_choose_target"></activity>
+            android:label="@string/title_activity_choose_target" />
     </application>
 
 </manifest>
