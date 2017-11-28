@@ -74,14 +74,15 @@ public class SoapReadTask extends SoapTask {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         // update activity
-        listener.updateTankLevels(level1, level2, level3);
-        listener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
-        listener.updatePumpingState(pumping, tankA, tankB);
+        listener.hideStartOverlay();
         if (lostConnection) {
             listener.setNoConnectionOverlayVisibility(View.VISIBLE);
         }
         else {
             listener.setNoConnectionOverlayVisibility(View.GONE);
+            listener.updateTankLevels(level1, level2, level3);
+            listener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
+            listener.updatePumpingState(pumping, tankA, tankB);
         }
     }
 
@@ -147,5 +148,7 @@ public class SoapReadTask extends SoapTask {
         void updatePumpingState(boolean pumping, int tankA, int tankB);
 
         void setNoConnectionOverlayVisibility(int visibility);
+
+        void hideStartOverlay();
     }
 }

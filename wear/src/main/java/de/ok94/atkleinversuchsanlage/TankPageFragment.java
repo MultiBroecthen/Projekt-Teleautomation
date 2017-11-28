@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 public class TankPageFragment extends Fragment{
 
-    TextView level1View, level2View, level3View;
-    ImageView warning1View, warning2View, warning3View;
-    boolean ll1old, ll2old, ll3old, lh1old, lh2old, lh3old;
+    private TextView level1View, level2View, level3View;
+    private ImageView warning1View, warning2View, warning3View;
+
+    private boolean ll1old, ll2old, ll3old, lh1old, lh2old, lh3old;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

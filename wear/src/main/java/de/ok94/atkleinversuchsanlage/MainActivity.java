@@ -10,6 +10,7 @@ import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.support.wearable.view.GridViewPager;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 
 
@@ -23,6 +24,7 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
     private PumpPageFragment pumpPageFragment;
 
     private LinearLayout noConnectionOverlay;
+    private LinearLayout startOverlay;
 
     private SoapReadTask soapReadTask;
     private Handler handler;
@@ -45,6 +47,7 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         pager.setAdapter(pagerAdapter);
 
         noConnectionOverlay = (LinearLayout) findViewById(R.id.noConnectionOverlay);
+        startOverlay = (LinearLayout) findViewById(R.id.startOverlay);
     }
 
     @Override
@@ -110,6 +113,11 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
     @Override
     public void setNoConnectionOverlayVisibility(int visibility) {
         noConnectionOverlay.setVisibility(visibility);
+    }
+
+    @Override
+    public void hideStartOverlay() {
+        startOverlay.setVisibility(View.GONE);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {
