@@ -57,32 +57,32 @@ public class SoapReadTask extends SoapTask {
     private static final String XPATH_TANK_A = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_A_FL']/Value";
     private static final String XPATH_TANK_B = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_B_FL']/Value";
 
-    private ValuesAvailable listener;
-
     private float level1, level2, level3;
     private boolean ll1, ll2, ll3, lh1, lh2, lh3;
     private boolean pumping;
     private int tankA, tankB;
     private boolean lostConnection;
 
-    SoapReadTask(ValuesAvailable listener) {
+    SoapReadTask() {
         super(SOAP_ACTION, SOAP_REQUEST);
-        this.listener = listener;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         // update activity
-        listener.hideStartOverlay();
+        MainActivity.soapReadListener.hideStartOverlay();
         if (lostConnection) {
-            listener.setNoConnectionOverlayVisibility(View.VISIBLE);
+            MainActivity.soapReadListener.setNoConnectionOverlayVisibility(View.VISIBLE);
         }
         else {
-            listener.setNoConnectionOverlayVisibility(View.GONE);
-            listener.updateTankLevels(level1, level2, level3);
-            listener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
-            listener.updatePumpingState(pumping, tankA, tankB);
+            MainActivity.soapReadListener.setNoConnectionOverlayVisibility(View.GONE);
+            MainActivity.soapReadListener.updateTankLevels(level1, level2, level3);
+            MainActivity.soapReadListener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
+            MainActivity.soapReadListener.updatePumpingState(pumping, tankA, tankB);
+            if (pumping) {
+                MainActivity.soapReadListener.hideLoadingOverlay();
+            }
         }
     }
 
@@ -150,5 +150,7 @@ public class SoapReadTask extends SoapTask {
         void setNoConnectionOverlayVisibility(int visibility);
 
         void hideStartOverlay();
+
+        void hideLoadingOverlay();
     }
 }

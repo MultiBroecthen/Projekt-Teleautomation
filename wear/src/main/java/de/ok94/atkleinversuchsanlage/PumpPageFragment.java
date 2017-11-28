@@ -16,7 +16,6 @@ public class PumpPageFragment extends Fragment{
     private ImageView imagePumpingButton;
     private TextView textPumpingButton;
     private TextView textPumpingState;
-    private LinearLayout pumpingButton;
 
     private boolean pumping;
 
@@ -27,7 +26,7 @@ public class PumpPageFragment extends Fragment{
         imagePumpingButton = (ImageView) rootView.findViewById(R.id.imagePumpingButton);
         textPumpingButton = (TextView) rootView.findViewById(R.id.textPumpingButton);
         textPumpingState = (TextView) rootView.findViewById(R.id.textPumpingState);
-        pumpingButton = (LinearLayout) rootView.findViewById(R.id.pumpingButton);
+        LinearLayout pumpingButton = (LinearLayout) rootView.findViewById(R.id.pumpingButton);
 
         pumping = false;
 

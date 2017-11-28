@@ -1,6 +1,19 @@
 package de.ok94.atkleinversuchsanlage;
 
 import android.util.Log;
+import android.view.View;
+
+import org.w3c.dom.Document;
+
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 
 public class SoapWriteTask extends SoapTask {
@@ -44,14 +57,61 @@ public class SoapWriteTask extends SoapTask {
             "    </m:Write>\n" +
             "  </SOAP-ENV:Body>\n" +
             "</SOAP-ENV:Envelope>";
+    private static final String XPATH_START_PUMPING = "/Envelope/Body/WriteResponse/RItemList/Items[@ItemName='Schneider/Start_Umpumpen_FL']";
+
+    private boolean startPumping, success;
 
     SoapWriteTask(boolean startPumping, int tankA, int tankB) {
         super(SOAP_ACTION, (startPumping ? String.format(START_PUMP_REQUEST, tankA, tankB) : STOP_PUMP_REQUEST));
+        this.startPumping = startPumping;
         Log.d("WRITE_REQUEST", (startPumping ? String.format(START_PUMP_REQUEST, tankA, tankB) : STOP_PUMP_REQUEST));
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        if (startPumping) {
+            MainActivity.soapWriteListener.setLoadingOverlayVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        if (startPumping && !success) {
+            MainActivity.soapWriteListener.setLoadingOverlayVisibility(View.GONE);
+        }
     }
 
     @Override
     protected void readSoapResponse(String soapResponse) {
         Log.i("WRITE_RESPONSE", soapResponse);
+
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(new ByteArrayInputStream(soapResponse.getBytes(StandardCharsets.UTF_8.name())));
+            XPathFactory xPathfactory = XPathFactory.newInstance();
+            XPath xpath = xPathfactory.newXPath();
+
+            XPathExpression expr = xpath.compile(XPATH_START_PUMPING);
+            expr.evaluate(doc, XPathConstants.STRING);
+
+            success = true;
+        }
+        catch (Exception e) {
+            success = false;
+            Log.e("XML_PARSE", e.toString());
+        }
+    }
+
+    @Override
+    protected void readErrorResponse(String errorResponse) {
+        success = false;
+        super.readErrorResponse(errorResponse);
+    }
+
+    public interface ResponseAvailable {
+        void setLoadingOverlayVisibility(int visibility);
     }
 }

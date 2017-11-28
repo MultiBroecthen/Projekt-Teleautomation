@@ -1,6 +1,5 @@
 package de.ok94.atkleinversuchsanlage;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.app.Fragment;
@@ -14,22 +13,25 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
-public class MainActivity extends WearableActivity implements SoapReadTask.ValuesAvailable {
+public class MainActivity extends WearableActivity implements SoapReadTask.ValuesAvailable, SoapWriteTask.ResponseAvailable {
 
     private static final int NUM_PAGES = 2;
     private static final int SOAP_READ_PERIOD = 1000;
     private static final float MAX_LEVEL = 280.0f;
+
+    public static SoapReadTask.ValuesAvailable soapReadListener;
+    public static SoapWriteTask.ResponseAvailable soapWriteListener;
 
     private TankPageFragment tankPageFragment;
     private PumpPageFragment pumpPageFragment;
 
     private LinearLayout noConnectionOverlay;
     private LinearLayout startOverlay;
+    private LinearLayout loadingOverlay;
 
     private SoapReadTask soapReadTask;
     private Handler handler;
     private Runnable runnable;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,10 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
 
         noConnectionOverlay = (LinearLayout) findViewById(R.id.noConnectionOverlay);
         startOverlay = (LinearLayout) findViewById(R.id.startOverlay);
+        loadingOverlay = (LinearLayout) findViewById(R.id.loadingOverlay);
+
+        soapReadListener = this;
+        soapWriteListener = this;
     }
 
     @Override
@@ -55,14 +61,13 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         super.onResume();
 
         handler = new Handler();
-        context = this;
 
         // start a Runnable that executes the SoapReadTask periodically
         runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    soapReadTask = new SoapReadTask((SoapReadTask.ValuesAvailable) context);
+                    soapReadTask = new SoapReadTask();
                     soapReadTask.execute();
                 }
                 catch (Exception e) {
@@ -118,6 +123,16 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
     @Override
     public void hideStartOverlay() {
         startOverlay.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideLoadingOverlay() {
+        loadingOverlay.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setLoadingOverlayVisibility(int visibility) {
+        loadingOverlay.setVisibility(visibility);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {

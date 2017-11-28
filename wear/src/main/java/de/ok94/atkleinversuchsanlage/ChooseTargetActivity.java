@@ -52,29 +52,13 @@ public class ChooseTargetActivity extends WearableActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SoapWriteTask soapWriteTask = new SoapWriteTask(true, source, target1);
-                soapWriteTask.execute();
-                Handler handler = new Handler();
-                Runnable runnable = new Runnable() {
-                    public void run() {
-                        finish();
-                    }
-                };
-                handler.postDelayed(runnable, 400);
+                sendSoapWriteRequest(source, target1);
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SoapWriteTask soapWriteTask = new SoapWriteTask(true, source, target2);
-                soapWriteTask.execute();
-                Handler handler = new Handler();
-                Runnable runnable = new Runnable() {
-                    public void run() {
-                        finish();
-                    }
-                };
-                handler.postDelayed(runnable, 400);
+                sendSoapWriteRequest(source, target2);
             }
         });
         buttonCancel.setOnClickListener(new View.OnClickListener() {
@@ -89,5 +73,17 @@ public class ChooseTargetActivity extends WearableActivity {
                 handler.postDelayed(runnable, 400);
             }
         });
+    }
+
+    private void sendSoapWriteRequest(int source, int target) {
+        SoapWriteTask soapWriteTask = new SoapWriteTask(true, source, target);
+        soapWriteTask.execute();
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            public void run() {
+                finish();
+            }
+        };
+        handler.postDelayed(runnable, 400);
     }
 }
