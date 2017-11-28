@@ -15,9 +15,11 @@
 
     <dimen name="tank_width">30dp</dimen>
     <dimen name="tank_height">100dp</dimen>
+    <dimen name="warning_icon_size">20dp</dimen>
     <dimen name="title">22sp</dimen>
     <dimen name="text">16sp</dimen>
     <dimen name="inline_action_button">30dp</dimen>
+    <dimen name="inline_action_button_background">50dp</dimen>
     <dimen name="half_tank_interspace">5dp</dimen>
     <dimen name="capacitive_sensor_size">7dp</dimen>
     <dimen name="capacitive_sensor_margin">2dp</dimen>

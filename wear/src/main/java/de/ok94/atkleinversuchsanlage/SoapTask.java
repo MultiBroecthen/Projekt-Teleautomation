@@ -37,7 +37,7 @@ public abstract class SoapTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    protected String sendSoapRequest() {
+    private String sendSoapRequest() {
         URL url;
         HttpURLConnection connection = null;
         String response = "";

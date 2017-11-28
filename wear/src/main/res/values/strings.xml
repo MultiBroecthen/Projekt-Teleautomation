@@ -1,22 +1,22 @@
 <resources>
     <string name="app_name">AT Kleinversuchsanlage</string>
-    <string name="tank_page_title"><u>Füllstand</u></string>
-    <string name="pump_page_title"><u>Umpumpen</u></string>
+    <string name="tank_page_title">Füllstand</string>
+    <string name="pump_page_title">Umpumpen</string>
     <string name="tank1">1</string>
     <string name="tank2">2</string>
     <string name="tank3">3</string>
-    <string name="pumping_active">Umpumpen von Behälter\u00A0<b>%1$d</b> nach Behälter\u00A0<b>%2$d</b> aktiv</string>
-    <string name="pumping_inactive">Umpumpen inaktiv</string>
+    <string name="pumping_active">gestartet\nQuelle: Behälter\u00A0%1$d\nZiel: Behälter\u00A0%2$d</string>
+    <string name="pumping_inactive">\ngestoppt\n</string>
     <string name="start"><i>Starten</i></string>
     <string name="stop"><i>Stoppen</i></string>
     <string name="title_activity_choose_source">ChooseSourceActivity</string>
-    <string name="choose_source_title"><u>Quellbehälter wählen</u></string>
-    <string name="one"><b>1</b></string>
-    <string name="two"><b>2</b></string>
-    <string name="three"><b>3</b></string>
+    <string name="choose_source_title">Quellbehälter wählen</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
     <string name="cancel"><i>Abbrechen</i></string>
     <string name="title_activity_choose_target">ChooseTargetActivity</string>
-    <string name="choose_target_title"><u>Zielbehälter wählen</u></string>
+    <string name="choose_target_title">Zielbehälter wählen</string>
     <string name="no_connection">keine Verbindung zum Server</string>
     <string name="warning">Warnung</string>
 </resources>

@@ -38,20 +38,20 @@
                 android:id="@+id/buttonSrc1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center"
                 android:padding="@dimen/button_padding">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/inline_action_button"
+                    android:layout_height="@dimen/inline_action_button"
                     android:background="@drawable/circle"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="@string/one"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/title" />
+                    android:textSize="@dimen/title"
+                    android:textAlignment="center"/>
             </FrameLayout>
 
             <TextView
@@ -62,20 +62,20 @@
                 android:id="@+id/buttonSrc2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center"
                 android:padding="@dimen/button_padding">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/inline_action_button"
+                    android:layout_height="@dimen/inline_action_button"
                     android:background="@drawable/circle"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="@string/two"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/title" />
+                    android:textSize="@dimen/title"
+                    android:textAlignment="center"/>
             </FrameLayout>
 
             <TextView
@@ -86,20 +86,20 @@
                 android:id="@+id/buttonSrc3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center"
                 android:padding="@dimen/button_padding">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/inline_action_button"
+                    android:layout_height="@dimen/inline_action_button"
                     android:background="@drawable/circle"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="@string/three"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/title" />
+                    android:textSize="@dimen/title"
+                    android:textAlignment="center"/>
             </FrameLayout>
         </LinearLayout>
 
