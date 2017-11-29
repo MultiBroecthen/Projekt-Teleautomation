@@ -13,14 +13,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 
-public class MainActivity extends WearableActivity implements SoapReadTask.ValuesAvailable, SoapWriteTask.ResponseAvailable {
+public class MainActivity extends WearableActivity implements Available {
 
     private static final int NUM_PAGES = 2;
     private static final int SOAP_READ_PERIOD = 1000;
     private static final float MAX_LEVEL = 280.0f;
 
-    public static SoapReadTask.ValuesAvailable soapReadListener;
-    public static SoapWriteTask.ResponseAvailable soapWriteListener;
+    public static Available availableListener;
 
     private TankPageFragment tankPageFragment;
     private PumpPageFragment pumpPageFragment;
@@ -52,8 +51,7 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
         startOverlay = (LinearLayout) findViewById(R.id.startOverlay);
         loadingOverlay = (LinearLayout) findViewById(R.id.loadingOverlay);
 
-        soapReadListener = this;
-        soapWriteListener = this;
+        availableListener = this;
     }
 
     @Override
@@ -123,11 +121,6 @@ public class MainActivity extends WearableActivity implements SoapReadTask.Value
     @Override
     public void hideStartOverlay() {
         startOverlay.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void hideLoadingOverlay() {
-        loadingOverlay.setVisibility(View.GONE);
     }
 
     @Override

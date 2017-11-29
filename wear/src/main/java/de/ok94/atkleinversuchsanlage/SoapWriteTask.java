@@ -71,7 +71,7 @@ public class SoapWriteTask extends SoapTask {
     protected void onPreExecute() {
         super.onPreExecute();
         if (startPumping) {
-            MainActivity.soapWriteListener.setLoadingOverlayVisibility(View.VISIBLE);
+            MainActivity.availableListener.setLoadingOverlayVisibility(View.VISIBLE);
         }
     }
 
@@ -79,7 +79,7 @@ public class SoapWriteTask extends SoapTask {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         if (startPumping && !success) {
-            MainActivity.soapWriteListener.setLoadingOverlayVisibility(View.GONE);
+            MainActivity.availableListener.setLoadingOverlayVisibility(View.GONE);
         }
     }
 
@@ -109,9 +109,5 @@ public class SoapWriteTask extends SoapTask {
     protected void readErrorResponse(String errorResponse) {
         success = false;
         super.readErrorResponse(errorResponse);
-    }
-
-    public interface ResponseAvailable {
-        void setLoadingOverlayVisibility(int visibility);
     }
 }
