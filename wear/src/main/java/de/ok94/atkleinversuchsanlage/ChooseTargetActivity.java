@@ -86,4 +86,10 @@ public class ChooseTargetActivity extends WearableActivity {
         };
         handler.postDelayed(runnable, 400);
     }
+
+    @Override
+    public void onEnterAmbient(Bundle ambientDetails) {
+        super.onEnterAmbient(ambientDetails);
+        finish();
+    }
 }

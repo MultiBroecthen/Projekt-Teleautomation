@@ -67,4 +67,10 @@ public class ChooseSourceActivity extends WearableActivity {
         };
         handler.postDelayed(runnable, 600);
     }
+
+    @Override
+    public void onEnterAmbient(Bundle ambientDetails) {
+        super.onEnterAmbient(ambientDetails);
+        finish();
+    }
 }
