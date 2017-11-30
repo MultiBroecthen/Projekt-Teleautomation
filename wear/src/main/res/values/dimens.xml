@@ -24,4 +24,6 @@
     <dimen name="capacitive_sensor_size">7dp</dimen>
     <dimen name="capacitive_sensor_margin">2dp</dimen>
     <dimen name="button_padding">5dp</dimen>
+    <dimen name="horizontal_space">16dp</dimen>
+    <dimen name="vertical_space">16dp</dimen>
 </resources>

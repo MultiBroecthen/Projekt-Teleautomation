@@ -3,8 +3,6 @@ package de.ok94.atkleinversuchsanlage;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -16,38 +14,40 @@ import android.widget.TextView;
 
 public class TankPageFragment extends Fragment{
 
-    private TextView titleView;
-    private TextView tank1View, tank2View, tank3View;
-    private TextView level1View, level2View, level3View;
-    private TextView textTank1, textTank2, textTank3;
-    private ImageView warning1View, warning2View, warning3View;
+    private TextView titleText;
+    private View tank1View, tank2View, tank3View;
+    private View level1View, level2View, level3View;
+    private TextView tank1Text, tank2Text, tank3Text;
+    private ImageView warning1Image, warning2Image, warning3Image;
 
-    private boolean ll1old, ll2old, ll3old, lh1old, lh2old, lh3old;
+    private boolean ll1_old, ll2_old, ll3_old, lh1_old, lh2_old, lh3_old;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tank_page, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tank_page,
+                container, false);
 
-        titleView = (TextView) rootView.findViewById(R.id.tankTitle);
-        tank1View = (TextView) rootView.findViewById(R.id.tank1);
-        tank2View = (TextView) rootView.findViewById(R.id.tank2);
-        tank3View = (TextView) rootView.findViewById(R.id.tank3);
-        level1View = (TextView) rootView.findViewById(R.id.level1);
-        level2View = (TextView) rootView.findViewById(R.id.level2);
-        level3View = (TextView) rootView.findViewById(R.id.level3);
-        textTank1 = (TextView) rootView.findViewById(R.id.textTank1);
-        textTank2 = (TextView) rootView.findViewById(R.id.textTank2);
-        textTank3 = (TextView) rootView.findViewById(R.id.textTank3);
-        warning1View = (ImageView) rootView.findViewById(R.id.warning1);
-        warning2View = (ImageView) rootView.findViewById(R.id.warning2);
-        warning3View = (ImageView) rootView.findViewById(R.id.warning3);
+        titleText = (TextView) rootView.findViewById(R.id.text_tank_title);
+        tank1View = (View) rootView.findViewById(R.id.view_tank_1);
+        tank2View = (View) rootView.findViewById(R.id.view_tank_2);
+        tank3View = (View) rootView.findViewById(R.id.view_tank_3);
+        level1View = (View) rootView.findViewById(R.id.view_level_1);
+        level2View = (View) rootView.findViewById(R.id.view_level_2);
+        level3View = (View) rootView.findViewById(R.id.view_level_3);
+        tank1Text = (TextView) rootView.findViewById(R.id.text_tank_1);
+        tank2Text = (TextView) rootView.findViewById(R.id.text_tank_2);
+        tank3Text = (TextView) rootView.findViewById(R.id.text_tank_3);
+        warning1Image = (ImageView) rootView.findViewById(R.id.image_warning_1);
+        warning2Image = (ImageView) rootView.findViewById(R.id.image_warning_2);
+        warning3Image = (ImageView) rootView.findViewById(R.id.image_warning_3);
 
-        ll1old = true;
-        ll2old = true;
-        ll3old = true;
-        lh1old = false;
-        lh2old = false;
-        lh3old = false;
+        ll1_old = true;
+        ll2_old = true;
+        ll3_old = true;
+        lh1_old = false;
+        lh2_old = false;
+        lh3_old = false;
 
         return rootView;
     }
@@ -62,45 +62,35 @@ public class TankPageFragment extends Fragment{
         level3View.requestLayout();
     }
 
-    public void setCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3) {
+    public void setCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3,
+                                          boolean lh1, boolean lh2, boolean lh3) {
         if (lh1 || !ll1) {
-            warning1View.setVisibility(View.VISIBLE);
-            if (lh1 != lh1old || ll1 != ll1old) {
-                vibrate();
-            }
+            warning1Image.setVisibility(View.VISIBLE);
+            if (lh1 != lh1_old || ll1 != ll1_old) vibrate();
         }
-        else {
-            warning1View.setVisibility(View.INVISIBLE);
-        }
+        else warning1Image.setVisibility(View.INVISIBLE);
         if (lh2 || !ll2) {
-            warning2View.setVisibility(View.VISIBLE);
-            if (lh2 != lh2old || ll2 != ll2old) {
-                vibrate();
-            }
+            warning2Image.setVisibility(View.VISIBLE);
+            if (lh2 != lh2_old || ll2 != ll2_old) vibrate();
         }
-        else {
-            warning2View.setVisibility(View.INVISIBLE);
-        }
+        else warning2Image.setVisibility(View.INVISIBLE);
         if (lh3 || !ll3) {
-            warning3View.setVisibility(View.VISIBLE);
-            if (lh3 != lh3old || ll3 != ll3old) {
-                vibrate();
-            }
+            warning3Image.setVisibility(View.VISIBLE);
+            if (lh3 != lh3_old || ll3 != ll3_old) vibrate();
         }
-        else {
-            warning3View.setVisibility(View.INVISIBLE);
-        }
+        else warning3Image.setVisibility(View.INVISIBLE);
 
-        ll1old = ll1;
-        ll2old = ll2;
-        ll3old = ll3;
-        lh1old = lh1;
-        lh2old = lh2;
-        lh3old = lh3;
+        ll1_old = ll1;
+        ll2_old = ll2;
+        ll3_old = ll3;
+        lh1_old = lh1;
+        lh2_old = lh2;
+        lh3_old = lh3;
     }
 
     public void vibrate() {
-        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) getActivity()
+                .getSystemService(Context.VIBRATOR_SERVICE);
         long[] vibrationPattern = {0, 500, 50, 300};
         // -1 - don't repeat
         final int indexInPatternToRepeat = -1;
@@ -113,34 +103,34 @@ public class TankPageFragment extends Fragment{
     }
 
     public void enterAmbient() {
-        final Drawable BACKGROUND = getResources().getDrawable(R.drawable.rect_border, getActivity().getTheme());
-        titleView.setTextColor(Color.WHITE);
-        tank1View.setBackground(BACKGROUND);
-        tank2View.setBackground(BACKGROUND);
-        tank3View.setBackground(BACKGROUND);
-        level1View.setBackground(BACKGROUND);
-        level2View.setBackground(BACKGROUND);
-        level3View.setBackground(BACKGROUND);
-        textTank1.setTextColor(Color.WHITE);
-        textTank2.setTextColor(Color.WHITE);
-        textTank3.setTextColor(Color.WHITE);
+        titleText.setTextColor(Color.WHITE);
+        tank1View.setBackgroundResource(R.drawable.rect_border);
+        tank2View.setBackgroundResource(R.drawable.rect_border);
+        tank3View.setBackgroundResource(R.drawable.rect_border);
+        level1View.setBackgroundResource(R.drawable.rect_border);
+        level2View.setBackgroundResource(R.drawable.rect_border);
+        level3View.setBackgroundResource(R.drawable.rect_border);
+        tank1Text.setTextColor(Color.WHITE);
+        tank2Text.setTextColor(Color.WHITE);
+        tank3Text.setTextColor(Color.WHITE);
     }
 
     public void exitAmbient() {
-        final int ACCENT = getResources().getColor(R.color.accent, getActivity().getTheme());
-        final int DARK_UI = getResources().getColor(R.color.darker_ui_element, getActivity().getTheme());
-        final int ACTIVE_UI = getResources().getColor(R.color.active_ui_element, getActivity().getTheme());
-        final ColorDrawable DARK_UI_BACKGROUND = new ColorDrawable(DARK_UI);
-        final ColorDrawable ACTIVE_UI_BACKGROUND = new ColorDrawable(ACTIVE_UI);
-        titleView.setTextColor(ACCENT);
-        tank1View.setBackground(DARK_UI_BACKGROUND);
-        tank2View.setBackground(DARK_UI_BACKGROUND);
-        tank3View.setBackground(DARK_UI_BACKGROUND);
-        level1View.setBackground(ACTIVE_UI_BACKGROUND);
-        level2View.setBackground(ACTIVE_UI_BACKGROUND);
-        level3View.setBackground(ACTIVE_UI_BACKGROUND);
-        textTank1.setTextColor(ACCENT);
-        textTank2.setTextColor(ACCENT);
-        textTank3.setTextColor(ACCENT);
+        final int ACCENT = getResources()
+                .getColor(R.color.accent, getActivity().getTheme());
+        final int DARK_UI = getResources()
+                .getColor(R.color.darker_ui_element, getActivity().getTheme());
+        final int ACTIVE_UI = getResources()
+                .getColor(R.color.active_ui_element, getActivity().getTheme());
+        titleText.setTextColor(ACCENT);
+        tank1View.setBackgroundColor(DARK_UI);
+        tank2View.setBackgroundColor(DARK_UI);
+        tank3View.setBackgroundColor(DARK_UI);
+        level1View.setBackgroundColor(ACTIVE_UI);
+        level2View.setBackgroundColor(ACTIVE_UI);
+        level3View.setBackgroundColor(ACTIVE_UI);
+        tank1Text.setTextColor(ACCENT);
+        tank2Text.setTextColor(ACCENT);
+        tank3Text.setTextColor(ACCENT);
     }
 }

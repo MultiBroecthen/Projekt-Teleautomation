@@ -18,10 +18,10 @@ public class ChooseSourceActivity extends WearableActivity {
         // Enables Always-on
         setAmbientEnabled();
 
-        FrameLayout button1 = (FrameLayout) findViewById(R.id.buttonSrc1);
-        FrameLayout button2 = (FrameLayout) findViewById(R.id.buttonSrc2);
-        FrameLayout button3 = (FrameLayout) findViewById(R.id.buttonSrc3);
-        LinearLayout buttonCancel = (LinearLayout) findViewById(R.id.buttonSrcCancel);
+        FrameLayout button1 = (FrameLayout) findViewById(R.id.button_src_1);
+        FrameLayout button2 = (FrameLayout) findViewById(R.id.button_src_2);
+        FrameLayout button3 = (FrameLayout) findViewById(R.id.button_src_3);
+        LinearLayout buttonCancel = (LinearLayout) findViewById(R.id.button_src_cancel);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,8 @@ public class ChooseSourceActivity extends WearableActivity {
     }
 
     private void chooseTarget(int source) {
-        Intent intent = new Intent(ChooseSourceActivity.this, ChooseTargetActivity.class);
+        Intent intent =
+                new Intent(ChooseSourceActivity.this, ChooseTargetActivity.class);
         intent.putExtra("source", source);
         startActivity(intent);
         Handler handler = new Handler();

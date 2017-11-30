@@ -2,7 +2,7 @@
 
 <android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/boxMain"
+    android:id="@+id/box_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_background"
@@ -23,63 +23,64 @@
         android:layout_gravity="center_horizontal|bottom" />
 
     <LinearLayout
-        android:id="@+id/loadingOverlay"
+        android:id="@+id/overlay_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/dark_background"
-        android:visibility="gone"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/loadingProgressBar"
+            android:id="@+id/progressbar_loading"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/noConnectionOverlay"
+        android:id="@+id/overlay_no_connection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/dark_background"
-        android:visibility="gone"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_cloud_off"/>
+            android:contentDescription="@string/no_connection"
+            android:src="@drawable/ic_action_cloud_off" />
 
-        <TextView
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="@dimen/text" />
+            android:layout_height="@dimen/vertical_space" />
 
         <TextView
-            android:id="@+id/noConnectionText"
+            android:id="@+id/text_no_connection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="@dimen/text"
             android:text="@string/no_connection"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/text" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/startOverlay"
+        android:id="@+id/overlay_start"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/dark_background"
-        android:visibility="visible"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ProgressBar
-            android:id="@+id/startProgressBar"
+            android:id="@+id/progressbar_start"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </android.support.wear.widget.BoxInsetLayout>
 

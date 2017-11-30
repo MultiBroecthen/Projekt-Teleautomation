@@ -14,23 +14,25 @@ import android.widget.TextView;
 
 public class PumpPageFragment extends Fragment{
 
-    private TextView titleView;
+    private TextView titleText;
     private LinearLayout pumpingButton;
-    private ImageView imagePumpingButton;
-    private TextView textPumpingButton;
-    private TextView textPumpingState;
+    private ImageView pumpingButtonImage;
+    private TextView pumpingButtonText;
+    private TextView pumpingStateText;
 
     private boolean pumping;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_pump_page, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_pump_page,
+                container, false);
 
-        titleView = (TextView) rootView.findViewById(R.id.pumpTitle);
-        imagePumpingButton = (ImageView) rootView.findViewById(R.id.imagePumpingButton);
-        textPumpingButton = (TextView) rootView.findViewById(R.id.textPumpingButton);
-        textPumpingState = (TextView) rootView.findViewById(R.id.textPumpingState);
-        pumpingButton = (LinearLayout) rootView.findViewById(R.id.pumpingButton);
+        titleText = (TextView) rootView.findViewById(R.id.text_pump_title);
+        pumpingButtonImage = (ImageView) rootView.findViewById(R.id.image_toggle_pumping_button);
+        pumpingButtonText = (TextView) rootView.findViewById(R.id.text_toggle_pumping_button);
+        pumpingStateText = (TextView) rootView.findViewById(R.id.text_pumping_state);
+        pumpingButton = (LinearLayout) rootView.findViewById(R.id.button_toggle_pumping);
 
         pumping = false;
 
@@ -38,7 +40,8 @@ public class PumpPageFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 if (pumping) {
-                    SoapWriteTask soapWriteTask = new SoapWriteTask(false, 0, 0);
+                    SoapWriteTask soapWriteTask =
+                            new SoapWriteTask(false, 0, 0);
                     soapWriteTask.execute();
                 }
                 else {
@@ -55,29 +58,30 @@ public class PumpPageFragment extends Fragment{
         this.pumping = pumping;
 
         if (pumping) {
-            imagePumpingButton.setImageResource(R.drawable.ic_action_stop);
-            textPumpingButton.setText(R.string.stop);
+            pumpingButtonImage.setImageResource(R.drawable.ic_action_stop);
+            pumpingButtonText.setText(R.string.stop);
             String pumpingState = getString(R.string.pumping_active);
             pumpingState = String.format(pumpingState, tankA, tankB);
-            textPumpingState.setText(pumpingState);
+            pumpingStateText.setText(pumpingState);
         }
         else {
-            imagePumpingButton.setImageResource(R.drawable.ic_action_start);
-            textPumpingButton.setText(R.string.start);
-            textPumpingState.setText(R.string.pumping_inactive);
+            pumpingButtonImage.setImageResource(R.drawable.ic_action_start);
+            pumpingButtonText.setText(R.string.start);
+            pumpingStateText.setText(R.string.pumping_inactive);
         }
     }
 
     public void enterAmbient() {
-        titleView.setTextColor(Color.WHITE);
-        textPumpingState.setTextColor(Color.WHITE);
+        titleText.setTextColor(Color.WHITE);
+        pumpingStateText.setTextColor(Color.WHITE);
         pumpingButton.setVisibility(View.INVISIBLE);
     }
 
     public void exitAmbient() {
-        final int ACCENT = getResources().getColor(R.color.accent, getActivity().getTheme());
-        titleView.setTextColor(ACCENT);
-        textPumpingState.setTextColor(ACCENT);
+        final int ACCENT = getResources()
+                .getColor(R.color.accent, getActivity().getTheme());
+        titleText.setTextColor(ACCENT);
+        pumpingStateText.setTextColor(ACCENT);
         pumpingButton.setVisibility(View.VISIBLE);
     }
 }

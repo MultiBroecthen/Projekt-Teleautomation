@@ -1,5 +1,6 @@
 package de.ok94.atkleinversuchsanlage;
 
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -22,10 +23,10 @@ public class MainActivity extends WearableActivity implements Available {
 
     private static final int NUM_PAGES = 2;
     private static final float MAX_LEVEL = 280.0f;
-    private static final int SHORT_READ_PERIOD = 1000;
-    private static final int LONG_READ_PERIOD = 10000;
+    private static final int ACTIVE_READ_PERIOD = 1000;
+    private static final int AMBIENT_READ_PERIOD = 10000;
 
-    public static Available availableListener;
+    private static Available availableListener;
 
     private TankPageFragment tankPageFragment;
     private PumpPageFragment pumpPageFragment;
@@ -38,7 +39,6 @@ public class MainActivity extends WearableActivity implements Available {
     private ProgressBar startProgressBar;
     private TextView noConnectionText;
 
-    private SoapReadTask soapReadTask;
     private Handler handler;
     private Runnable runnable;
 
@@ -59,23 +59,39 @@ public class MainActivity extends WearableActivity implements Available {
         ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         pager.setAdapter(pagerAdapter);
 
-        boxLayout = (BoxInsetLayout) findViewById(R.id.boxMain);
-        noConnectionOverlay = (LinearLayout) findViewById(R.id.noConnectionOverlay);
-        startOverlay = (LinearLayout) findViewById(R.id.startOverlay);
-        loadingOverlay = (LinearLayout) findViewById(R.id.loadingOverlay);
-        loadingProgressBar = (ProgressBar) findViewById(R.id.loadingProgressBar);
-        startProgressBar = (ProgressBar) findViewById(R.id.startProgressBar);
-        noConnectionText = (TextView) findViewById(R.id.noConnectionText);
+        boxLayout = (BoxInsetLayout) findViewById(R.id.box_main);
+        noConnectionOverlay = (LinearLayout) findViewById(R.id.overlay_no_connection);
+        startOverlay = (LinearLayout) findViewById(R.id.overlay_start);
+        loadingOverlay = (LinearLayout) findViewById(R.id.overlay_loading);
+        loadingProgressBar = (ProgressBar) findViewById(R.id.progressbar_loading);
+        startProgressBar = (ProgressBar) findViewById(R.id.progressbar_start);
+        noConnectionText = (TextView) findViewById(R.id.text_no_connection);
+
+        final int ACTIVE_UI = getResources()
+                .getColor(R.color.active_ui_element, getTheme());
+        loadingProgressBar.getIndeterminateDrawable()
+                .setColorFilter(ACTIVE_UI, PorterDuff.Mode.SRC_IN);
+        startProgressBar.getIndeterminateDrawable()
+                .setColorFilter(ACTIVE_UI, PorterDuff.Mode.SRC_IN);
 
         availableListener = this;
 
-        readPeriod = SHORT_READ_PERIOD;
+        readPeriod = ACTIVE_READ_PERIOD;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        startSoapReadTask();
+    }
 
+    @Override
+    protected void onPause() {
+        stopSoapReadTask();
+        super.onPause();
+    }
+
+    private void startSoapReadTask() {
         handler = new Handler();
 
         // start a Runnable that executes the SoapReadTask periodically
@@ -83,7 +99,7 @@ public class MainActivity extends WearableActivity implements Available {
             @Override
             public void run() {
                 try {
-                    soapReadTask = new SoapReadTask();
+                    SoapReadTask soapReadTask = new SoapReadTask();
                     soapReadTask.execute();
                 }
                 catch (Exception e) {
@@ -94,14 +110,11 @@ public class MainActivity extends WearableActivity implements Available {
                 }
             }
         };
-        handler.postDelayed(runnable, readPeriod);
+        handler.post(runnable);
     }
 
-    @Override
-    protected void onPause() {
-        // stop the Runnable
+    private void stopSoapReadTask() {
         handler.removeCallbacks(runnable);
-        super.onPause();
     }
 
     @Override
@@ -118,7 +131,8 @@ public class MainActivity extends WearableActivity implements Available {
     }
 
     @Override
-    public void updateCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3, boolean lh1, boolean lh2, boolean lh3) {
+    public void updateCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3,
+                                             boolean lh1, boolean lh2, boolean lh3) {
         if (tankPageFragment.isAdded()) {
             tankPageFragment.setCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
         }
@@ -151,12 +165,8 @@ public class MainActivity extends WearableActivity implements Available {
         super.onEnterAmbient(ambientDetails);
 
         enterAmbient();
-        if (tankPageFragment.isAdded()) {
-            tankPageFragment.enterAmbient();
-        }
-        if (pumpPageFragment.isAdded()) {
-            pumpPageFragment.enterAmbient();
-        }
+        if (tankPageFragment.isAdded()) tankPageFragment.enterAmbient();
+        if (pumpPageFragment.isAdded()) pumpPageFragment.enterAmbient();
     }
 
     @Override
@@ -164,38 +174,46 @@ public class MainActivity extends WearableActivity implements Available {
         super.onExitAmbient();
 
         exitAmbient();
-        if (tankPageFragment.isAdded()) {
-            tankPageFragment.exitAmbient();
-        }
-        if (pumpPageFragment.isAdded()) {
-            pumpPageFragment.exitAmbient();
-        }
+        if (tankPageFragment.isAdded()) tankPageFragment.exitAmbient();
+        if (pumpPageFragment.isAdded()) pumpPageFragment.exitAmbient();
     }
 
     private void enterAmbient() {
-        readPeriod = LONG_READ_PERIOD;
+        readPeriod = AMBIENT_READ_PERIOD;
 
         boxLayout.setBackgroundColor(Color.BLACK);
         noConnectionOverlay.setBackgroundColor(Color.BLACK);
         startOverlay.setBackgroundColor(Color.BLACK);
         loadingOverlay.setBackgroundColor(Color.BLACK);
-        loadingProgressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-        startProgressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        loadingProgressBar.getIndeterminateDrawable()
+                .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        startProgressBar.getIndeterminateDrawable()
+                .setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         noConnectionText.setTextColor(Color.WHITE);
     }
 
     private void exitAmbient() {
-        readPeriod = SHORT_READ_PERIOD;
+        readPeriod = ACTIVE_READ_PERIOD;
 
-        final int ACCENT = getResources().getColor(R.color.accent, getTheme());
-        final int BACKGROUND = getResources().getColor(R.color.dark_background, getTheme());
+        final int ACCENT = getResources()
+                .getColor(R.color.accent, getTheme());
+        final int ACTIVE_UI = getResources()
+                .getColor(R.color.active_ui_element, getTheme());
+        final int BACKGROUND = getResources()
+                .getColor(R.color.dark_background, getTheme());
         boxLayout.setBackgroundColor(BACKGROUND);
         noConnectionOverlay.setBackgroundColor(BACKGROUND);
         startOverlay.setBackgroundColor(BACKGROUND);
         loadingOverlay.setBackgroundColor(BACKGROUND);
-        loadingProgressBar.getIndeterminateDrawable().setColorFilter(ACCENT, PorterDuff.Mode.SRC_IN);
-        startProgressBar.getIndeterminateDrawable().setColorFilter(ACCENT, PorterDuff.Mode.SRC_IN);
+        loadingProgressBar.getIndeterminateDrawable()
+                .setColorFilter(ACTIVE_UI, PorterDuff.Mode.SRC_IN);
+        startProgressBar.getIndeterminateDrawable()
+                .setColorFilter(ACTIVE_UI, PorterDuff.Mode.SRC_IN);
         noConnectionText.setTextColor(ACCENT);
+    }
+
+    public static Available getAvailableListener() {
+        return availableListener;
     }
 
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {

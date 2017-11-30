@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.wear.widget.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,9 +22,9 @@
             android:textColor="@color/accent"
             android:textSize="@dimen/title" />
 
-        <TextView
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="@dimen/text" />
+            android:layout_height="@dimen/vertical_space" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +33,7 @@
             android:orientation="horizontal">
 
             <FrameLayout
-                android:id="@+id/buttonTgt1"
+                android:id="@+id/button_tgt_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -44,27 +42,27 @@
                 android:padding="@dimen/button_padding">
 
                 <TextView
-                    android:id="@+id/buttonTgt1Text"
+                    android:id="@+id/text_tgt_1_button"
                     android:layout_width="@dimen/inline_action_button"
                     android:layout_height="@dimen/inline_action_button"
-                    android:background="@drawable/circle"
                     android:layout_gravity="center"
+                    android:background="@drawable/circle"
                     android:text="@string/one"
+                    android:textAlignment="center"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/title"
-                    android:textAlignment="center"/>
+                    android:textSize="@dimen/title" />
             </FrameLayout>
 
-            <TextView
-                android:layout_width="@dimen/text"
-                android:layout_height="@dimen/text" />
+            <Space
+                android:layout_width="@dimen/horizontal_space"
+                android:layout_height="match_parent" />
 
-            <TextView
-                android:layout_width="@dimen/text"
-                android:layout_height="@dimen/text" />
+            <Space
+                android:layout_width="@dimen/horizontal_space"
+                android:layout_height="match_parent" />
 
             <FrameLayout
-                android:id="@+id/buttonTgt2"
+                android:id="@+id/button_tgt_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -73,24 +71,24 @@
                 android:padding="@dimen/button_padding">
 
                 <TextView
-                    android:id="@+id/buttonTgt2Text"
+                    android:id="@+id/text_tgt_2_button"
                     android:layout_width="@dimen/inline_action_button"
                     android:layout_height="@dimen/inline_action_button"
-                    android:background="@drawable/circle"
                     android:layout_gravity="center"
+                    android:background="@drawable/circle"
                     android:text="@string/two"
+                    android:textAlignment="center"
                     android:textColor="@color/light_grey"
-                    android:textSize="@dimen/title"
-                    android:textAlignment="center"/>
+                    android:textSize="@dimen/title" />
             </FrameLayout>
         </LinearLayout>
 
-        <TextView
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="@dimen/text" />
+            android:layout_height="@dimen/vertical_space" />
 
         <LinearLayout
-            android:id="@+id/buttonTgtCancel"
+            android:id="@+id/button_tgt_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -105,11 +103,12 @@
                 android:layout_width="@dimen/inline_action_button"
                 android:layout_height="@dimen/inline_action_button"
                 android:background="@drawable/circle"
+                android:contentDescription="@string/cancel"
                 android:src="@drawable/ic_cancel" />
 
-            <TextView
-                android:layout_width="@dimen/text"
-                android:layout_height="@dimen/text" />
+            <Space
+                android:layout_width="@dimen/horizontal_space"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:layout_width="wrap_content"

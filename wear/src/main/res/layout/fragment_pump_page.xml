@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,62 +9,63 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/pumpTitle"
+            android:id="@+id/text_pump_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="top"
             android:text="@string/pump_page_title"
             android:textAlignment="center"
-            android:textSize="@dimen/title"
             android:textColor="@color/accent"
-            android:gravity="top"/>
+            android:textSize="@dimen/title" />
 
-        <TextView
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="@dimen/text"/>
+            android:layout_height="@dimen/vertical_space" />
 
         <TextView
-            android:id="@+id/textPumpingState"
+            android:id="@+id/text_pumping_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pumping_inactive"
             android:textAlignment="center"
-            android:textSize="@dimen/text"
-            android:textColor="@color/accent"/>
+            android:textColor="@color/accent"
+            android:textSize="@dimen/text" />
 
-        <TextView
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="@dimen/text"/>
+            android:layout_height="@dimen/vertical_space" />
 
         <LinearLayout
-            android:id="@+id/pumpingButton"
+            android:id="@+id/button_toggle_pumping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:paddingTop="@dimen/button_padding"
-            android:paddingBottom="@dimen/button_padding">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/button_padding"
+            android:paddingTop="@dimen/button_padding">
 
             <ImageView
-                android:id="@+id/imagePumpingButton"
+                android:id="@+id/image_toggle_pumping_button"
                 android:layout_width="@dimen/inline_action_button"
                 android:layout_height="@dimen/inline_action_button"
-                android:src="@drawable/ic_action_start"
-                android:background="@drawable/circle"/>
+                android:background="@drawable/circle"
+                android:contentDescription="@string/toggle_pumping"
+                android:src="@drawable/ic_action_start" />
+
+            <Space
+                android:layout_width="@dimen/horizontal_space"
+                android:layout_height="match_parent" />
 
             <TextView
-                android:layout_width="@dimen/text"
-                android:layout_height="@dimen/text"/>
-
-            <TextView
-                android:id="@+id/textPumpingButton"
+                android:id="@+id/text_toggle_pumping_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/start"
-                android:textSize="@dimen/text"
-                android:textColor="@color/accent"/>
+                android:textColor="@color/accent"
+                android:textSize="@dimen/text" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

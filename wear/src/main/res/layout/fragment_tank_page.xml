@@ -9,13 +9,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tankTitle"
+            android:id="@+id/text_tank_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tank_page_title"
             android:textAlignment="center"
-            android:textSize="@dimen/title"
-            android:textColor="@color/accent"/>
+            android:textColor="@color/accent"
+            android:textSize="@dimen/title" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,42 +29,42 @@
                 android:paddingLeft="@dimen/half_tank_interspace"
                 android:paddingRight="@dimen/half_tank_interspace">
 
-                <TextView
-                    android:id="@+id/spacer1"
+                <Space
+                    android:id="@+id/space_1"
                     android:layout_width="@dimen/tank_width"
-                    android:layout_height="@dimen/text"/>
+                    android:layout_height="@dimen/text" />
 
-                <TextView
-                    android:id="@+id/tank1"
+                <View
+                    android:id="@+id/view_tank_1"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="@dimen/tank_height"
-                    android:background="@color/darker_ui_element"
-                    android:layout_below="@id/spacer1"/>
+                    android:layout_below="@id/space_1"
+                    android:background="@color/darker_ui_element" />
 
-                <TextView
-                    android:id="@+id/level1"
+                <View
+                    android:id="@+id/view_level_1"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="50dp"
-                    android:background="@color/active_ui_element"
-                    android:layout_alignBottom="@id/tank1"/>
+                    android:layout_alignBottom="@id/view_tank_1"
+                    android:background="@color/active_ui_element" />
 
                 <TextView
-                    android:id="@+id/textTank1"
+                    android:id="@+id/text_tank_1"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/view_tank_1"
                     android:text="@string/tank1"
                     android:textAlignment="center"
-                    android:layout_below="@id/tank1"
-                    android:textSize="@dimen/text"
-                    android:textColor="@color/accent"/>
+                    android:textColor="@color/accent"
+                    android:textSize="@dimen/text" />
 
                 <ImageView
-                    android:id="@+id/warning1"
+                    android:id="@+id/image_warning_1"
                     android:layout_width="@dimen/warning_icon_size"
                     android:layout_height="@dimen/warning_icon_size"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_action_warning"
-                    android:contentDescription="@string/warning"/>
+                    android:contentDescription="@string/warning"
+                    android:src="@drawable/ic_action_warning" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -73,42 +73,42 @@
                 android:paddingLeft="@dimen/half_tank_interspace"
                 android:paddingRight="@dimen/half_tank_interspace">
 
-                <TextView
-                    android:id="@+id/spacer2"
+                <Space
+                    android:id="@+id/space_2"
                     android:layout_width="@dimen/tank_width"
-                    android:layout_height="@dimen/text"/>
+                    android:layout_height="@dimen/text" />
 
-                <TextView
-                    android:id="@+id/tank2"
+                <View
+                    android:id="@+id/view_tank_2"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="@dimen/tank_height"
-                    android:background="@color/darker_ui_element"
-                    android:layout_below="@id/spacer2"/>
+                    android:layout_below="@id/space_2"
+                    android:background="@color/darker_ui_element" />
 
-                <TextView
-                    android:id="@+id/level2"
+                <View
+                    android:id="@+id/view_level_2"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="50dp"
-                    android:background="@color/active_ui_element"
-                    android:layout_alignBottom="@id/tank2"/>
+                    android:layout_alignBottom="@id/view_tank_2"
+                    android:background="@color/active_ui_element" />
 
                 <TextView
-                    android:id="@+id/textTank2"
+                    android:id="@+id/text_tank_2"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/view_tank_2"
                     android:text="@string/tank2"
                     android:textAlignment="center"
-                    android:layout_below="@id/tank2"
-                    android:textSize="@dimen/text"
-                    android:textColor="@color/accent"/>
+                    android:textColor="@color/accent"
+                    android:textSize="@dimen/text" />
 
                 <ImageView
-                    android:id="@+id/warning2"
+                    android:id="@+id/image_warning_2"
                     android:layout_width="@dimen/warning_icon_size"
                     android:layout_height="@dimen/warning_icon_size"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_action_warning"
-                    android:contentDescription="@string/warning"/>
+                    android:contentDescription="@string/warning"
+                    android:src="@drawable/ic_action_warning" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -117,42 +117,42 @@
                 android:paddingLeft="@dimen/half_tank_interspace"
                 android:paddingRight="@dimen/half_tank_interspace">
 
-                <TextView
-                    android:id="@+id/spacer3"
+                <Space
+                    android:id="@+id/space_3"
                     android:layout_width="@dimen/tank_width"
-                    android:layout_height="@dimen/text"/>
+                    android:layout_height="@dimen/text" />
 
-                <TextView
-                    android:id="@+id/tank3"
+                <View
+                    android:id="@+id/view_tank_3"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="@dimen/tank_height"
-                    android:background="@color/darker_ui_element"
-                    android:layout_below="@id/spacer3"/>
+                    android:layout_below="@id/space_3"
+                    android:background="@color/darker_ui_element" />
 
-                <TextView
-                    android:id="@+id/level3"
+                <View
+                    android:id="@+id/view_level_3"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="50dp"
-                    android:background="@color/active_ui_element"
-                    android:layout_alignBottom="@id/tank3"/>
+                    android:layout_alignBottom="@id/view_tank_3"
+                    android:background="@color/active_ui_element" />
 
                 <TextView
-                    android:id="@+id/textTank3"
+                    android:id="@+id/text_tank_3"
                     android:layout_width="@dimen/tank_width"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/view_tank_3"
                     android:text="@string/tank3"
                     android:textAlignment="center"
-                    android:layout_below="@id/tank3"
-                    android:textSize="@dimen/text"
-                    android:textColor="@color/accent"/>
+                    android:textColor="@color/accent"
+                    android:textSize="@dimen/text" />
 
                 <ImageView
-                    android:id="@+id/warning3"
+                    android:id="@+id/image_warning_3"
                     android:layout_width="@dimen/warning_icon_size"
                     android:layout_height="@dimen/warning_icon_size"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_action_warning"
-                    android:contentDescription="@string/warning"/>
+                    android:contentDescription="@string/warning"
+                    android:src="@drawable/ic_action_warning" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

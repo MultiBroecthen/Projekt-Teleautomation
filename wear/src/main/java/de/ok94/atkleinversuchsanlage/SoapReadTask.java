@@ -17,8 +17,10 @@ import javax.xml.xpath.XPathFactory;
 
 public class SoapReadTask extends SoapTask {
 
-    private static final String SOAP_ACTION = "\"http://opcfoundation.org/webservices/XMLDA/1.0/Read\"";
-    private static final String SOAP_REQUEST = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+    private static final String SOAP_ACTION =
+            "\"http://opcfoundation.org/webservices/XMLDA/1.0/Read\"";
+    private static final String SOAP_REQUEST =
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
             "<SOAP-ENV:Envelope\n" +
             "    xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
             "    xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"\n" +
@@ -26,7 +28,9 @@ public class SoapReadTask extends SoapTask {
             "    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n" +
             "    <SOAP-ENV:Body>\n" +
             "        <m:Read xmlns:m=\"http://opcfoundation.org/webservices/XMLDA/1.0/\">\n" +
-            "            <m:Options ReturnErrorText=\"false\" ReturnDiagnosticInfo=\"false\" ReturnItemTime=\"false\" ReturnItemPath=\"false\" ReturnItemName=\"true\"/>\n" +
+            "            <m:Options ReturnErrorText=\"false\" ReturnDiagnosticInfo=\"false\" \n" +
+            "                ReturnItemTime=\"false\" ReturnItemPath=\"false\" \n" +
+            "                ReturnItemName=\"true\"/>\n" +
             "            <m:ItemList>\n" +
             "                <m:Items ItemName=\"Schneider/Fuellstand1_Ist\"/>\n" +
             "                <m:Items ItemName=\"Schneider/Fuellstand2_Ist\"/>\n" +
@@ -44,18 +48,30 @@ public class SoapReadTask extends SoapTask {
             "        </m:Read>\n" +
             "    </SOAP-ENV:Body>\n" +
             "</SOAP-ENV:Envelope>";
-    private static final String XPATH_LEVEL1 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand1_Ist']/Value";
-    private static final String XPATH_LEVEL2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand2_Ist']/Value";
-    private static final String XPATH_LEVEL3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand3_Ist']/Value";
-    private static final String XPATH_LL1 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL1']/Value";
-    private static final String XPATH_LL2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL2']/Value";
-    private static final String XPATH_LL3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL3']/Value";
-    private static final String XPATH_LH1 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH1']/Value";
-    private static final String XPATH_LH2 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH2']/Value";
-    private static final String XPATH_LH3 = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH3']/Value";
-    private static final String XPATH_PUMPING = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Start_Umpumpen_FL']/Value";
-    private static final String XPATH_TANK_A = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_A_FL']/Value";
-    private static final String XPATH_TANK_B = "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_B_FL']/Value";
+    private static final String XPATH_LEVEL1 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand1_Ist']/Value";
+    private static final String XPATH_LEVEL2 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand2_Ist']/Value";
+    private static final String XPATH_LEVEL3 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Fuellstand3_Ist']/Value";
+    private static final String XPATH_LL1 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL1']/Value";
+    private static final String XPATH_LL2 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL2']/Value";
+    private static final String XPATH_LL3 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LL3']/Value";
+    private static final String XPATH_LH1 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH1']/Value";
+    private static final String XPATH_LH2 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH2']/Value";
+    private static final String XPATH_LH3 =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/LH3']/Value";
+    private static final String XPATH_PUMPING =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Start_Umpumpen_FL']/Value";
+    private static final String XPATH_TANK_A =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_A_FL']/Value";
+    private static final String XPATH_TANK_B =
+            "/Envelope/Body/ReadResponse/RItemList/Items[@ItemName='Schneider/Behaelter_B_FL']/Value";
 
     private float level1, level2, level3;
     private boolean ll1, ll2, ll3, lh1, lh2, lh3;
@@ -71,18 +87,15 @@ public class SoapReadTask extends SoapTask {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         // update activity
-        MainActivity.availableListener.hideStartOverlay();
-        if (lostConnection) {
-            MainActivity.availableListener.setNoConnectionOverlayVisibility(View.VISIBLE);
-        }
+        Available availableListener = MainActivity.getAvailableListener();
+        availableListener.hideStartOverlay();
+        if (lostConnection) availableListener.setNoConnectionOverlayVisibility(View.VISIBLE);
         else {
-            MainActivity.availableListener.setNoConnectionOverlayVisibility(View.GONE);
-            MainActivity.availableListener.updateTankLevels(level1, level2, level3);
-            MainActivity.availableListener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
-            MainActivity.availableListener.updatePumpingState(pumping, tankA, tankB);
-            if (pumping) {
-                MainActivity.availableListener.setLoadingOverlayVisibility(View.GONE);
-            }
+            availableListener.setNoConnectionOverlayVisibility(View.GONE);
+            availableListener.updateTankLevels(level1, level2, level3);
+            availableListener.updateCapacitiveSensorStates(ll1, ll2, ll3, lh1, lh2, lh3);
+            availableListener.updatePumpingState(pumping, tankA, tankB);
+            if (pumping) availableListener.setLoadingOverlayVisibility(View.GONE);
         }
     }
 
@@ -95,7 +108,9 @@ public class SoapReadTask extends SoapTask {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(new ByteArrayInputStream(soapResponse.getBytes(StandardCharsets.UTF_8.name())));
+            ByteArrayInputStream inputStream =
+                    new ByteArrayInputStream(soapResponse.getBytes(StandardCharsets.UTF_8.name()));
+            Document doc = builder.parse(inputStream);
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
 

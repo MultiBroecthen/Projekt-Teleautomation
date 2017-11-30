@@ -23,11 +23,11 @@ public class ChooseTargetActivity extends WearableActivity {
         Intent intent = getIntent();
         final int source = intent.getIntExtra("source", 1);
 
-        FrameLayout button1 = (FrameLayout) findViewById(R.id.buttonTgt1);
-        FrameLayout button2 = (FrameLayout) findViewById(R.id.buttonTgt2);
-        TextView button1Text = (TextView) findViewById(R.id.buttonTgt1Text);
-        TextView button2Text = (TextView) findViewById(R.id.buttonTgt2Text);
-        LinearLayout buttonCancel = (LinearLayout) findViewById(R.id.buttonTgtCancel);
+        FrameLayout button1 = (FrameLayout) findViewById(R.id.button_tgt_1);
+        FrameLayout button2 = (FrameLayout) findViewById(R.id.button_tgt_2);
+        TextView button1Text = (TextView) findViewById(R.id.text_tgt_1_button);
+        TextView button2Text = (TextView) findViewById(R.id.text_tgt_2_button);
+        LinearLayout buttonCancel = (LinearLayout) findViewById(R.id.button_tgt_cancel);
 
         final int target1, target2;
         if (source == 1) {

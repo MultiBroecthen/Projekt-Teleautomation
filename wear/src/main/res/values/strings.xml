@@ -19,4 +19,5 @@
     <string name="choose_target_title">Zielbehälter wählen</string>
     <string name="no_connection">keine Verbindung zum Server</string>
     <string name="warning">Warnung</string>
+    <string name="toggle_pumping">Umpumpen starten/stoppen</string>
 </resources>
