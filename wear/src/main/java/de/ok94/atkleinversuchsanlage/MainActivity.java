@@ -1,14 +1,14 @@
 package de.ok94.atkleinversuchsanlage;
 
-import android.app.FragmentTransaction;
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.app.Fragment;
 import android.os.Handler;
+import android.support.wear.ambient.AmbientMode;
 import android.support.wear.widget.BoxInsetLayout;
-import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 import android.support.wearable.view.GridViewPager;
@@ -19,7 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
-public class MainActivity extends WearableActivity implements Available {
+public class MainActivity extends Activity implements Available,
+        AmbientMode.AmbientCallbackProvider {
 
     private static final int NUM_PAGES = 2;
     private static final float MAX_LEVEL = 280.0f;
@@ -50,7 +51,7 @@ public class MainActivity extends WearableActivity implements Available {
         setContentView(R.layout.activity_main);
 
         // Enables Always-on
-        setAmbientEnabled();
+        AmbientMode.attachAmbientSupport(this);
 
         // set up the pages of the main activity
         GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
@@ -160,24 +161,6 @@ public class MainActivity extends WearableActivity implements Available {
         loadingOverlay.setVisibility(visibility);
     }
 
-    @Override
-    public void onEnterAmbient(Bundle ambientDetails) {
-        super.onEnterAmbient(ambientDetails);
-
-        enterAmbient();
-        if (tankPageFragment.isAdded()) tankPageFragment.enterAmbient();
-        if (pumpPageFragment.isAdded()) pumpPageFragment.enterAmbient();
-    }
-
-    @Override
-    public void onExitAmbient() {
-        super.onExitAmbient();
-
-        exitAmbient();
-        if (tankPageFragment.isAdded()) tankPageFragment.exitAmbient();
-        if (pumpPageFragment.isAdded()) pumpPageFragment.exitAmbient();
-    }
-
     private void enterAmbient() {
         readPeriod = AMBIENT_READ_PERIOD;
 
@@ -212,8 +195,33 @@ public class MainActivity extends WearableActivity implements Available {
         noConnectionText.setTextColor(ACCENT);
     }
 
+    @Override
+    public AmbientMode.AmbientCallback getAmbientCallback() {
+        return new MyAmbientCallback();
+    }
+
     public static Available getAvailableListener() {
         return availableListener;
+    }
+
+    private class MyAmbientCallback extends AmbientMode.AmbientCallback {
+        @Override
+        public void onEnterAmbient(Bundle ambientDetails) {
+            super.onEnterAmbient(ambientDetails);
+
+            enterAmbient();
+            if (tankPageFragment.isAdded()) tankPageFragment.enterAmbient();
+            if (pumpPageFragment.isAdded()) pumpPageFragment.enterAmbient();
+        }
+
+        @Override
+        public void onExitAmbient() {
+            super.onExitAmbient();
+
+            exitAmbient();
+            if (tankPageFragment.isAdded()) tankPageFragment.exitAmbient();
+            if (pumpPageFragment.isAdded()) pumpPageFragment.exitAmbient();
+        }
     }
 
     private class ScreenSlidePagerAdapter extends FragmentGridPagerAdapter {

@@ -1,16 +1,17 @@
 package de.ok94.atkleinversuchsanlage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.wearable.activity.WearableActivity;
+import android.support.wear.ambient.AmbientMode;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-public class ChooseTargetActivity extends WearableActivity {
+public class ChooseTargetActivity extends Activity implements AmbientMode.AmbientCallbackProvider {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class ChooseTargetActivity extends WearableActivity {
         setContentView(R.layout.activity_choose_target);
 
         // Enables Always-on
-        setAmbientEnabled();
+        AmbientMode.attachAmbientSupport(this);
 
         Intent intent = getIntent();
         final int source = intent.getIntExtra("source", 1);
@@ -88,8 +89,15 @@ public class ChooseTargetActivity extends WearableActivity {
     }
 
     @Override
-    public void onEnterAmbient(Bundle ambientDetails) {
-        super.onEnterAmbient(ambientDetails);
-        finish();
+    public AmbientMode.AmbientCallback getAmbientCallback() {
+        return new MyAmbientCallback();
+    }
+
+    private class MyAmbientCallback extends AmbientMode.AmbientCallback {
+        @Override
+        public void onEnterAmbient(Bundle ambientDetails) {
+            super.onEnterAmbient(ambientDetails);
+            finish();
+        }
     }
 }

@@ -1,14 +1,15 @@
 package de.ok94.atkleinversuchsanlage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.wearable.activity.WearableActivity;
+import android.support.wear.ambient.AmbientMode;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-public class ChooseSourceActivity extends WearableActivity {
+public class ChooseSourceActivity extends Activity implements AmbientMode.AmbientCallbackProvider {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +17,7 @@ public class ChooseSourceActivity extends WearableActivity {
         setContentView(R.layout.activity_choose_source);
 
         // Enables Always-on
-        setAmbientEnabled();
+        AmbientMode.attachAmbientSupport(this);
 
         FrameLayout button1 = (FrameLayout) findViewById(R.id.button_src_1);
         FrameLayout button2 = (FrameLayout) findViewById(R.id.button_src_2);
@@ -70,8 +71,15 @@ public class ChooseSourceActivity extends WearableActivity {
     }
 
     @Override
-    public void onEnterAmbient(Bundle ambientDetails) {
-        super.onEnterAmbient(ambientDetails);
-        finish();
+    public AmbientMode.AmbientCallback getAmbientCallback() {
+        return new MyAmbientCallback();
+    }
+
+    private class MyAmbientCallback extends AmbientMode.AmbientCallback {
+        @Override
+        public void onEnterAmbient(Bundle ambientDetails) {
+            super.onEnterAmbient(ambientDetails);
+            finish();
+        }
     }
 }
