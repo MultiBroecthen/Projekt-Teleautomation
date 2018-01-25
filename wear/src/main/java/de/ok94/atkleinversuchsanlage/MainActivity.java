@@ -107,6 +107,9 @@ public class MainActivity extends Activity implements Available,
                     Log.e("ASYNC_TASK", e.toString());
                 }
                 finally {
+                    if (readPeriod == AMBIENT_READ_PERIOD) {
+                        getAmbientCallback().onUpdateAmbient();
+                    }
                     handler.postDelayed(this, readPeriod);
                 }
             }
