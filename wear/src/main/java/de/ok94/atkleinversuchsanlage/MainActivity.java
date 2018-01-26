@@ -60,6 +60,7 @@ public class MainActivity extends Activity implements Available,
         ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         pager.setAdapter(pagerAdapter);
 
+        // get references for the ui elements
         boxLayout = (BoxInsetLayout) findViewById(R.id.box_main);
         noConnectionOverlay = (LinearLayout) findViewById(R.id.overlay_no_connection);
         startOverlay = (LinearLayout) findViewById(R.id.overlay_start);
@@ -68,6 +69,7 @@ public class MainActivity extends Activity implements Available,
         startProgressBar = (ProgressBar) findViewById(R.id.progressbar_start);
         noConnectionText = (TextView) findViewById(R.id.text_no_connection);
 
+        // change the color of the progressbars
         final int ACTIVE_UI = getResources()
                 .getColor(R.color.active_ui_element, getTheme());
         loadingProgressBar.getIndeterminateDrawable()
@@ -75,8 +77,10 @@ public class MainActivity extends Activity implements Available,
         startProgressBar.getIndeterminateDrawable()
                 .setColorFilter(ACTIVE_UI, PorterDuff.Mode.SRC_IN);
 
+        // get a static reference to the Available Interface
         availableListener = this;
 
+        // set the readPeriod to active
         readPeriod = ACTIVE_READ_PERIOD;
     }
 
@@ -108,6 +112,7 @@ public class MainActivity extends Activity implements Available,
                 }
                 finally {
                     if (readPeriod == AMBIENT_READ_PERIOD) {
+                        // make sure the ui is updated every Period in Ambient Mode
                         getAmbientCallback().onUpdateAmbient();
                     }
                     handler.postDelayed(this, readPeriod);
@@ -167,6 +172,7 @@ public class MainActivity extends Activity implements Available,
     private void enterAmbient() {
         readPeriod = AMBIENT_READ_PERIOD;
 
+        // change the color of the ui elements
         boxLayout.setBackgroundColor(Color.BLACK);
         noConnectionOverlay.setBackgroundColor(Color.BLACK);
         startOverlay.setBackgroundColor(Color.BLACK);
@@ -181,6 +187,7 @@ public class MainActivity extends Activity implements Available,
     private void exitAmbient() {
         readPeriod = ACTIVE_READ_PERIOD;
 
+        // change the color of the ui elements
         final int ACCENT = getResources()
                 .getColor(R.color.accent, getTheme());
         final int ACTIVE_UI = getResources()

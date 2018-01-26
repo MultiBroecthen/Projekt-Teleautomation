@@ -21,15 +21,18 @@ public class ChooseTargetActivity extends Activity implements AmbientMode.Ambien
         // Enables Always-on
         AmbientMode.attachAmbientSupport(this);
 
+        // get the source tank
         Intent intent = getIntent();
         final int source = intent.getIntExtra("source", 1);
 
+        // get references for the ui elements
         FrameLayout button1 = (FrameLayout) findViewById(R.id.button_tgt_1);
         FrameLayout button2 = (FrameLayout) findViewById(R.id.button_tgt_2);
         TextView button1Text = (TextView) findViewById(R.id.text_tgt_1_button);
         TextView button2Text = (TextView) findViewById(R.id.text_tgt_2_button);
         LinearLayout buttonCancel = (LinearLayout) findViewById(R.id.button_tgt_cancel);
 
+        // set target choices
         final int target1, target2;
         if (source == 1) {
             button1Text.setText(R.string.two);
@@ -50,6 +53,7 @@ public class ChooseTargetActivity extends Activity implements AmbientMode.Ambien
             target2 = 2;
         }
 
+        // init buttons
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,8 +81,10 @@ public class ChooseTargetActivity extends Activity implements AmbientMode.Ambien
     }
 
     private void sendSoapWriteRequest(int source, int target) {
+        // send a request to the server
         SoapWriteTask soapWriteTask = new SoapWriteTask(true, source, target);
         soapWriteTask.execute();
+        // for a smooth transition, delay the finish a bit
         Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             public void run() {

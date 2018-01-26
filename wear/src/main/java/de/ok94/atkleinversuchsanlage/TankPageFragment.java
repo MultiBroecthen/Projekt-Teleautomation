@@ -28,6 +28,7 @@ public class TankPageFragment extends Fragment{
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_tank_page,
                 container, false);
 
+        // get references for the ui elements
         titleText = (TextView) rootView.findViewById(R.id.text_tank_title);
         tank1View = (View) rootView.findViewById(R.id.view_tank_1);
         tank2View = (View) rootView.findViewById(R.id.view_tank_2);
@@ -42,6 +43,7 @@ public class TankPageFragment extends Fragment{
         warning2Image = (ImageView) rootView.findViewById(R.id.image_warning_2);
         warning3Image = (ImageView) rootView.findViewById(R.id.image_warning_3);
 
+        // initial values
         ll1_old = true;
         ll2_old = true;
         ll3_old = true;
@@ -53,6 +55,7 @@ public class TankPageFragment extends Fragment{
     }
 
     public void setTankLevels(float level1, float level2, float level3) {
+        // adjust the ui to the tank levels
         level1View.getLayoutParams().height = (int) level1;
         level2View.getLayoutParams().height = (int) level2;
         level3View.getLayoutParams().height = (int) level3;
@@ -64,8 +67,11 @@ public class TankPageFragment extends Fragment{
 
     public void setCapacitiveSensorStates(boolean ll1, boolean ll2, boolean ll3,
                                           boolean lh1, boolean lh2, boolean lh3) {
+        // adjust the ui to the capacitive sensor states
         if (lh1 || !ll1) {
+            // for critical state show warning
             warning1Image.setVisibility(View.VISIBLE);
+            // only vibrate once
             if (lh1 != lh1_old || ll1 != ll1_old) vibrate();
         }
         else warning1Image.setVisibility(View.INVISIBLE);
@@ -80,6 +86,7 @@ public class TankPageFragment extends Fragment{
         }
         else warning3Image.setVisibility(View.INVISIBLE);
 
+        // save the capacitive sensor states
         ll1_old = ll1;
         ll2_old = ll2;
         ll3_old = ll3;
@@ -103,6 +110,7 @@ public class TankPageFragment extends Fragment{
     }
 
     public void enterAmbient() {
+        // change the color of the ui elements
         titleText.setTextColor(Color.WHITE);
         tank1View.setBackgroundResource(R.drawable.rect_border);
         tank2View.setBackgroundResource(R.drawable.rect_border);
@@ -116,6 +124,7 @@ public class TankPageFragment extends Fragment{
     }
 
     public void exitAmbient() {
+        // change the color of the ui elements
         final int ACCENT = getResources()
                 .getColor(R.color.accent, getActivity().getTheme());
         final int DARK_UI = getResources()

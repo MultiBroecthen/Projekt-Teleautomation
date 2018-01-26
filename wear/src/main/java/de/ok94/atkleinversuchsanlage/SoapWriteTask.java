@@ -99,6 +99,7 @@ public class SoapWriteTask extends SoapTask {
     protected void readSoapResponse(String soapResponse) {
         Log.i("WRITE_RESPONSE", soapResponse);
 
+        // read the SOAP response via Xpath
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -111,9 +112,11 @@ public class SoapWriteTask extends SoapTask {
             XPathExpression expr = xpath.compile(XPATH_START_PUMPING);
             expr.evaluate(doc, XPathConstants.STRING);
 
+            // no exception -> success
             success = true;
         }
         catch (Exception e) {
+            // exception -> no success
             success = false;
             Log.e("XML_PARSE", e.toString());
         }

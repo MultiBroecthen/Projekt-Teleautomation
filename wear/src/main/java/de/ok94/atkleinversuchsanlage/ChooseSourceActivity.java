@@ -19,11 +19,13 @@ public class ChooseSourceActivity extends Activity implements AmbientMode.Ambien
         // Enables Always-on
         AmbientMode.attachAmbientSupport(this);
 
+        // get references for the ui elements
         FrameLayout button1 = (FrameLayout) findViewById(R.id.button_src_1);
         FrameLayout button2 = (FrameLayout) findViewById(R.id.button_src_2);
         FrameLayout button3 = (FrameLayout) findViewById(R.id.button_src_3);
         LinearLayout buttonCancel = (LinearLayout) findViewById(R.id.button_src_cancel);
 
+        // init buttons
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,10 +59,12 @@ public class ChooseSourceActivity extends Activity implements AmbientMode.Ambien
     }
 
     private void chooseTarget(int source) {
+        // start the ChooseTargerActivity
         Intent intent =
                 new Intent(ChooseSourceActivity.this, ChooseTargetActivity.class);
         intent.putExtra("source", source);
         startActivity(intent);
+        // for a smooth transition, delay the finish a bit
         Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             public void run() {

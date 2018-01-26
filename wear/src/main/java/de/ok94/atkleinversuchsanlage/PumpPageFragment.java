@@ -28,23 +28,28 @@ public class PumpPageFragment extends Fragment{
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_pump_page,
                 container, false);
 
+        // get references for the ui elements
         titleText = (TextView) rootView.findViewById(R.id.text_pump_title);
         pumpingButtonImage = (ImageView) rootView.findViewById(R.id.image_toggle_pumping_button);
         pumpingButtonText = (TextView) rootView.findViewById(R.id.text_toggle_pumping_button);
         pumpingStateText = (TextView) rootView.findViewById(R.id.text_pumping_state);
         pumpingButton = (LinearLayout) rootView.findViewById(R.id.button_toggle_pumping);
 
+        // initial value for pumping state
         pumping = false;
 
+        // init the button
         pumpingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (pumping) {
+                    // if pumping is active -> stop it
                     SoapWriteTask soapWriteTask =
                             new SoapWriteTask(false, 0, 0);
                     soapWriteTask.execute();
                 }
                 else {
+                    // if pumping is inactive -> start it
                     Intent intent = new Intent(getActivity(), ChooseSourceActivity.class);
                     startActivity(intent);
                 }
@@ -55,8 +60,10 @@ public class PumpPageFragment extends Fragment{
     }
 
     public void setPumpingState(boolean pumping, int tankA, int tankB) {
+        // save the pumping state
         this.pumping = pumping;
 
+        // adjust the ui to the pumping state
         if (pumping) {
             pumpingButtonImage.setImageResource(R.drawable.ic_action_stop);
             pumpingButtonText.setText(R.string.stop);
@@ -72,12 +79,14 @@ public class PumpPageFragment extends Fragment{
     }
 
     public void enterAmbient() {
+        // change the color of the ui elements
         titleText.setTextColor(Color.WHITE);
         pumpingStateText.setTextColor(Color.WHITE);
         pumpingButton.setVisibility(View.INVISIBLE);
     }
 
     public void exitAmbient() {
+        // change the color of the ui elements
         final int ACCENT = getResources()
                 .getColor(R.color.accent, getActivity().getTheme());
         titleText.setTextColor(ACCENT);
